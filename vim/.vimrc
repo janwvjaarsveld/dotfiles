@@ -5,7 +5,6 @@ silent! if plug#begin('~/.vim/plugged')
 " ========== autocomplete
 Plug 'styled-components/vim-styled-components'
 Plug 'mattn/emmet-vim'
-"Plug 'valloric/youcompleteme'
 Plug 'luochen1990/rainbow'
 
 " ========= snippets
@@ -22,7 +21,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'w0rp/ale'
 Plug 'hashivim/vim-terraform'
 Plug 'tyewang/vimux-jest-test'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
 
 " ========== colorschemes
 Plug 'flazz/vim-colorschemes'
@@ -41,8 +40,6 @@ Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
 Plug 'yonchu/accelerated-smooth-scroll'
 Plug 'vim-scripts/IndexedSearch'
-Plug 'tpope/vim-haml'
-Plug 'junegunn/goyo.vim'
 
 "========= syntax helpers
 Plug 'hail2u/vim-css3-syntax'
@@ -50,6 +47,7 @@ Plug 'ap/vim-css-color'
 Plug 'tpope/vim-commentary'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'mileszs/ack.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'jiangmiao/auto-pairs'
 Plug 'alvan/vim-closetag'
@@ -315,28 +313,42 @@ let g:go_highlight_operators = 1
 
 au filetype go inoremap <buffer> . .<C-x><C-o>
 
+" Ag search setup
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" Configure for terraform files
+let g:terrafrom_fmt_on_save=1
+let g:terrafrom_align=1
+
 " }}}
 
 
 " MAPPINGS --------------------------------------------------------------- {{{
 
-" Set the backslash as the leader key.
+" Set the space as the leader key.
 let mapleader = " "
-
-" Mapping for Fuzzy search Files
-
-if (isdirectory('.git'))
-  map ; :GFiles<CR>
-else
-  map ; :Files<CR>
-endif
-
-
-" Mapping for Fuzzy search Buffer
-map ' :Buffer<CR>
 
 " Press ' ,' to jump back to the last cursor position.
 nnoremap <leader>, ``
+
+" Mapping for Fuzzy search Files
+if (isdirectory('.git') == 1)
+  nnoremap <leader>; :GFiles<CR>
+else
+  nnoremap <leader>; :Files<CR>
+endif
+
+" Mapping for Ag search
+nnoremap <leader>s :Ag<CR>
+
+" Refresh files in buffer
+nnoremap <leader>rr :bufdo e<CR>
+
+" Mapping for Fuzzy search Buffer
+nnoremap <leader>' :Buffer<CR>
+
+" Close file in buffer
+nnoremap <leader>qq :bd<CR>
 
 " Type jj to exit insert mode quickly.
 inoremap jj <Esc>
@@ -350,9 +362,6 @@ nnoremap O O<esc>
 nnoremap n nzz
 nnoremap N Nzz
 
-" Yank from cursor to the end of line.
-nnoremap Y y$
-
 " Resize split windows using arrow keys by pressing:
 " CTRL+UP, CTRL+DOWN, CTRL+LEFT, or CTRL+RIGHT.
 noremap <c-up> <c-w>+
@@ -362,7 +371,8 @@ noremap <c-right> <c-w><
 
 " NERDTree specific mappings.
 " Map the <CTRL+t> key to toggle NERDTree open and close.
-nnoremap <C-t> :NERDTreeToggle<cr>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <leader>ut :NERDTreeRefreshRoot<CR>
 map <leader>t :NERDTreeFind<CR>
 " Have nerdtree ignore certain files and directories.
 let NERDTreeIgnore=['\.git$', '\.jpg$', '\.mp4$', '\.ogg$', '\.iso$', '\.pdf$', '\.pyc$', '\.odt$', '\.png$', '\.gif$', '\.db$']
@@ -447,7 +457,7 @@ nmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
-
+"
 " Run the Code Lens action on the current line.
 nmap <leader>cl  <Plug>(coc-codelens-action)
 
@@ -579,46 +589,6 @@ augroup cursor_off
     autocmd WinEnter * set cursorline
 augroup END
 
-" If GUI version of Vim is running set these options.
-if has('gui_running')
-
-    " Set the background tone.
-    set background=dark
-
-    " Set the color scheme.
-    colorscheme molokai
-
-    " Set a custom font you have installed on your computer.
-    " Syntax: set guifont=<font_name>\ <font_weight>\ <size>
-    set guifont=Monospace\ Regular\ 12
-
-    " Display more of the file by default.
-    " Hide the toolbar.
-    set guioptions-=T
-
-    " Hide the the left-side scroll bar.
-    set guioptions-=L
-
-    " Hide the the right-side scroll bar.
-    set guioptions-=r
-
-    " Hide the the menu bar.
-    set guioptions-=m
-
-    " Hide the the bottom scroll bar.
-    set guioptions-=b
-
-    " Map the F4 key to toggle the menu, toolbar, and scroll bar.
-    " <Bar> is the pipe character.
-    " <CR> is the enter key.
-    nnoremap <F4> :if &guioptions=~#'mTr'<Bar>
-        \set guioptions-=mTr<Bar>
-        \else<Bar>
-        \set guioptions+=mTr<Bar>
-        \endif<CR>
-
-endif
-
 " autostart nerd-tree
 autocmd StdinReadPre * let s:std_in=1
 
@@ -739,7 +709,53 @@ endfunction
 
 command! -nargs=1 GotoLocalhost call s:gotoLocalHost(<f-args>)
 
+" ----------------------------------------------------------------------------
+" ToggleFolding
+" ----------------------------------------------------------------------------
+function! s:toggleFolding()
+  if &foldenable
+    set nofoldenable
+    echo "nofoldenable"
+  else
+    set foldenable
+    echo "foldenable"
+  endif
+endfunction
 
+command! ToggleFolding call s:toggleFolding()
+map <F2> :ToggleFolding<CR>
+
+" ----------------------------------------------------------------------------
+" TogglePaste
+" ----------------------------------------------------------------------------
+function! s:togglePaste()
+  if &paste
+    set nopaste
+    echo "nopaste"
+  else
+    set paste
+    echo "paste"
+  endif
+endfunction
+
+command! TogglePaste call s:togglePaste()
+map <F3> :TogglePaste<CR>
+
+" ----------------------------------------------------------------------------
+" ToggleLineNumbers
+" ----------------------------------------------------------------------------
+function! s:toggleLineNumbers()
+  if &number
+    set nonumber norelativenumber
+    echo "nonumber norelativenumber"
+  else
+    set number relativenumber
+    echo "number relativenumber"
+  endif
+endfunction
+
+command! ToggleLineNumbers call s:toggleLineNumbers()
+map <leader>l :ToggleLineNumbers<CR>
 " }}}
 
 
