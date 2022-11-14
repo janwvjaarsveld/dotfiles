@@ -6,15 +6,33 @@ vim.g.loaded_netrwPlugin = 1
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 
--- OR setup with some options
+local lib = require("nvim-tree.lib")
+
+local git_stage = function()
+  local node = lib.get_node_at_cursor()
+  local gs = node.git_status
+
+  -- If the file is untracked, unstaged or partially staged, we stage it
+  if gs == "??" or gs == "MM" or gs == "AM" or gs == " M" then
+    vim.cmd("silent !git add " .. node.absolute_path)
+
+    -- If the file is staged, we unstage
+  elseif gs == "M " or gs == "A " then
+    vim.cmd("silent !git restore --staged " .. node.absolute_path)
+  end
+
+  lib.refresh_tree()
+end
+
 require("nvim-tree").setup({
   sort_by = "case_sensitive",
   view = {
     side = "right",
-    adaptive_size = false,
+    adaptive_size = true,
     mappings = {
       list = {
         { key = "u", action = "dir_up" },
+        { key = "<tab>", action = "git_stage", action_cb = git_stage },
       },
     },
     number = true,

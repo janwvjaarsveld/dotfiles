@@ -200,6 +200,11 @@ _G.packer_plugins = {
     path = "/Users/janwvjaarsveld/.local/share/nvim/site/pack/packer/start/git-worktree.nvim",
     url = "https://github.com/ThePrimeagen/git-worktree.nvim"
   },
+  ["guihua.lua"] = {
+    loaded = true,
+    path = "/Users/janwvjaarsveld/.local/share/nvim/site/pack/packer/start/guihua.lua",
+    url = "https://github.com/ray-x/guihua.lua"
+  },
   ["lsp_extensions.nvim"] = {
     loaded = true,
     path = "/Users/janwvjaarsveld/.local/share/nvim/site/pack/packer/start/lsp_extensions.nvim",
@@ -211,6 +216,7 @@ _G.packer_plugins = {
     url = "https://github.com/ray-x/lsp_signature.nvim"
   },
   ["mason-lspconfig.nvim"] = {
+    config = { "\27LJ\2\næ\1\0\2\5\0\n\0\0216\2\0\0'\4\1\0B\2\2\0029\2\2\0025\4\3\0=\0\4\4=\1\5\4B\2\2\0016\2\0\0'\4\6\0B\2\2\0029\2\a\2\18\4\1\0B\2\2\0016\2\0\0'\4\b\0B\2\2\0029\2\t\2\18\4\1\0B\2\2\1K\0\1\0\23code_action_prompt\25navigator.codeAction\22documentHighlight\27navigator.dochighlight\nbufnr\vclient\1\0\0\nsetup navigator.lspclient.mapping\frequire[\1\0\4\0\a\0\n6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0005\2\5\0003\3\4\0=\3\6\2B\0\2\1K\0\1\0\14on_attach\1\0\0\0\nsetup\npylsp\14lspconfig\frequireÞ\2\1\0\5\0\16\0\0276\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\6\0005\3\4\0005\4\3\0=\4\5\3=\3\a\2B\0\2\0016\0\0\0'\2\b\0B\0\2\0029\0\t\0005\2\v\0003\3\n\0=\3\f\2B\0\2\0016\0\0\0'\2\b\0B\0\2\0029\0\2\0005\2\14\0005\3\r\0=\3\15\2B\0\2\1K\0\1\0\21ensure_installed\1\0\0\1\14\0\0\16sumneko_lua\18rust_analyzer\rdockerls\ncssls\veslint\ngopls\fgraphql\thtml\vjsonls\rtsserver\fpyright\16terraformls\vyamlls\npylsp\1\0\0\0\19setup_handlers\20mason-lspconfig\aui\1\0\0\nicons\1\0\0\1\0\1\22package_installed\bâœ“\nsetup\nmason\frequire\0" },
     loaded = true,
     path = "/Users/janwvjaarsveld/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
     url = "https://github.com/williamboman/mason-lspconfig.nvim"
@@ -225,13 +231,18 @@ _G.packer_plugins = {
     path = "/Users/janwvjaarsveld/.local/share/nvim/site/pack/packer/start/molokai",
     url = "https://github.com/tomasr/molokai"
   },
+  ["navigator.lua"] = {
+    loaded = true,
+    path = "/Users/janwvjaarsveld/.local/share/nvim/site/pack/packer/start/navigator.lua",
+    url = "https://github.com/ray-x/navigator.lua"
+  },
   ["null-ls.nvim"] = {
     loaded = true,
     path = "/Users/janwvjaarsveld/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
     url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
   },
   ["nvim-cmp"] = {
-    after = { "LuaSnip", "friendly-snippets", "cmp-buffer", "cmp-calc", "cmp-cmdline", "cmp-path", "cmp-emoji", "cmp_luasnip", "cmp-treesitter", "cmp-nvim-lua", "cmp-spell" },
+    after = { "cmp-calc", "cmp-cmdline", "cmp-emoji", "LuaSnip", "cmp-nvim-lua", "cmp-spell", "friendly-snippets", "cmp-treesitter", "cmp_luasnip", "cmp-buffer", "cmp-path" },
     config = { "\27LJ\2\n8\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\15config.cmp\frequire\0" },
     loaded = false,
     needs_bufread = false,
@@ -280,6 +291,11 @@ _G.packer_plugins = {
     path = "/Users/janwvjaarsveld/.local/share/nvim/site/pack/packer/start/prettier.nvim",
     url = "https://github.com/MunifTanjim/prettier.nvim"
   },
+  ["rust-tools.nvim"] = {
+    loaded = true,
+    path = "/Users/janwvjaarsveld/.local/share/nvim/site/pack/packer/start/rust-tools.nvim",
+    url = "https://github.com/simrat39/rust-tools.nvim"
+  },
   ["telescope.nvim"] = {
     loaded = true,
     path = "/Users/janwvjaarsveld/.local/share/nvim/site/pack/packer/start/telescope.nvim",
@@ -299,6 +315,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: mason-lspconfig.nvim
+time([[Config for mason-lspconfig.nvim]], true)
+try_loadstring("\27LJ\2\næ\1\0\2\5\0\n\0\0216\2\0\0'\4\1\0B\2\2\0029\2\2\0025\4\3\0=\0\4\4=\1\5\4B\2\2\0016\2\0\0'\4\6\0B\2\2\0029\2\a\2\18\4\1\0B\2\2\0016\2\0\0'\4\b\0B\2\2\0029\2\t\2\18\4\1\0B\2\2\1K\0\1\0\23code_action_prompt\25navigator.codeAction\22documentHighlight\27navigator.dochighlight\nbufnr\vclient\1\0\0\nsetup navigator.lspclient.mapping\frequire[\1\0\4\0\a\0\n6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0005\2\5\0003\3\4\0=\3\6\2B\0\2\1K\0\1\0\14on_attach\1\0\0\0\nsetup\npylsp\14lspconfig\frequireÞ\2\1\0\5\0\16\0\0276\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\6\0005\3\4\0005\4\3\0=\4\5\3=\3\a\2B\0\2\0016\0\0\0'\2\b\0B\0\2\0029\0\t\0005\2\v\0003\3\n\0=\3\f\2B\0\2\0016\0\0\0'\2\b\0B\0\2\0029\0\2\0005\2\14\0005\3\r\0=\3\15\2B\0\2\1K\0\1\0\21ensure_installed\1\0\0\1\14\0\0\16sumneko_lua\18rust_analyzer\rdockerls\ncssls\veslint\ngopls\fgraphql\thtml\vjsonls\rtsserver\fpyright\16terraformls\vyamlls\npylsp\1\0\0\0\19setup_handlers\20mason-lspconfig\aui\1\0\0\nicons\1\0\0\1\0\1\22package_installed\bâœ“\nsetup\nmason\frequire\0", "config", "mason-lspconfig.nvim")
+time([[Config for mason-lspconfig.nvim]], false)
 -- Config for: which-key.nvim
 time([[Config for which-key.nvim]], true)
 try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")

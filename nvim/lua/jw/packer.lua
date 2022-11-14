@@ -42,44 +42,48 @@ return require('packer').startup(function(use)
     end
   })
 
-  -- LSP
-  -- use({
-  --   "neovim/nvim-lspconfig",
-  --   opt = true,
-  --   event = "BufReadPre",
-  --   wants = { "cmp-nvim-lsp", "nvim-lsp-installer", "lsp_signature.nvim" },
-  --   config = function()
-  --     require("config.lsp").setup()
-  --   end,
-  --   requires = {
-  --     "williamboman/nvim-lsp-installer",
-  --     "ray-x/lsp_signature.nvim",
-  --   },
-  -- })
-
   use("williamboman/mason.nvim")
-  use("williamboman/mason-lspconfig.nvim")
-  use("neovim/nvim-lspconfig")
-  use("ray-x/lsp_signature.nvim")
+  use({
+    "williamboman/mason-lspconfig.nvim",
+    config = function()
+      require("mason").setup({
+        ui = {
+          icons = {
+            package_installed = "✓"
+          }
+        }
+      })
+      require("mason-lspconfig").setup_handlers({
+        ["pylsp"] = function()
+          require("lspconfig").pylsp.setup({
+            on_attach = function(client, bufnr)
+              require("navigator.lspclient.mapping").setup({ client = client, bufnr = bufnr }) -- setup navigator keymaps here,
+              require("navigator.dochighlight").documentHighlight(bufnr)
+              require("navigator.codeAction").code_action_prompt(bufnr)
+            end,
+          })
+        end,
+      })
+      require("mason-lspconfig").setup({
+        ensure_installed = { "sumneko_lua", "rust_analyzer", "dockerls", "cssls", "eslint", "gopls", "graphql", "html",
+          "jsonls", "tsserver", "pyright", "terraformls", "yamlls" }
+      })
+    end,
+  })
 
+  use({
+    'ray-x/navigator.lua',
+    requires = {
+      { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
+      { 'neovim/nvim-lspconfig' },
+      { 'ray-x/lsp_signature.nvim' },
+    },
+  })
+
+  use("simrat39/rust-tools.nvim")
 
   use('jose-elias-alvarez/null-ls.nvim')
   use('MunifTanjim/prettier.nvim')
-  -- use({
-  --   "neovim/nvim-lspconfig",
-  --   opt = true,
-  --   event = "BufReadPre",
-  --   wants = { "cmp-nvim-lsp", "mason", "mason-lspconfig", "lsp_signature.nvim" },
-  --   config = function()
-  --     require("config.lsp").setup()
-  --   end,
-  --   requires = {
-  --     "williamboman/mason.nvim",
-  --     "williamboman/mason-lspconfig.nvim",
-  --     "ray-x/lsp_signature.nvim",
-  --   },
-  -- })
-
   use("hrsh7th/cmp-nvim-lsp")
 
   use({
