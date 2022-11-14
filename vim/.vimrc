@@ -21,7 +21,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'w0rp/ale'
 Plug 'hashivim/vim-terraform'
 Plug 'tyewang/vimux-jest-test'
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
 
 " ========== colorschemes
 Plug 'flazz/vim-colorschemes'
@@ -31,7 +31,6 @@ Plug 'cakebaker/scss-syntax.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'jparise/vim-graphql'
 Plug 'vim-syntastic/syntastic'
 
 " ==== enable matchit
@@ -51,6 +50,7 @@ Plug 'mileszs/ack.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'jiangmiao/auto-pairs'
 Plug 'alvan/vim-closetag'
+Plug 'jparise/vim-graphql'
 
 " ========= file tree
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
