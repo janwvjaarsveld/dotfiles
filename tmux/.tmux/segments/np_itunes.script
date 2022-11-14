@@ -5,8 +5,8 @@ tell application "System Events"
 	set process_list to (name of every process)
 end tell
 
-if process_list contains "iTunes" then
-	tell application "iTunes"
+if process_list contains "Music" then
+	tell application "Music"
 		if player state is playing then
 			set track_name to name of current track
 			set artist_name to artist of current track
@@ -21,4 +21,3 @@ if process_list contains "iTunes" then
 		end if
 	end tell
 end if
-

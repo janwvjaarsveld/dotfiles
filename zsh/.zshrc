@@ -163,14 +163,22 @@ alias zsh="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias vimrc='vim ~/.vimrc'
 alias szsh="source ~/.zshrc"
-
+alias fixlogi="sudo pkill -9 logiopt"
 
 # Example aliases
 alias IAGRPF="cd ~/Development/projects/IAGL/reward-platform"
+alias TXIAGRPF="tmux new -s reward-platform -c ~/Development/projects/IAGL/reward-platform || tmux a -t reward-platform"
 alias IAGFAB="cd ~/Development/projects/IAGL/redemption-flight-availability-service"
+alias TXIAGFAB="tmux new -s redemption-flight-availability-service -c ~/Development/projects/IAGL/redemption-flight-availability-service || tmux a -t redemption-flight-availability-service"
 alias IAGLOC="cd ~/Development/projects/IAGL/redemption-locations-service"
+alias TXIAGLOC="tmux new -s redemption-locations-service -c ~/Development/projects/IAGL/redemption-locations-service || tmux a -t redemption-locations-service"
 alias IAGLOCINFRA="cd ~/Development/projects/IAGL/redemption-locations-infrastructure"
+alias TXIAGLOCINFRA="tmux new -s redemption-locations-infrastructure -c ~/Development/projects/IAGL/redemption-locations-infrastructure || tmux a -t redemption-locations-infrastructure"
+alias IAGTFC="cd ~/Development/projects/IAGL/redemption-flight-tax-fees-charges-service"
+alias TXIAGTFC="tmux new -s redemption-flight-tax-fees-charges-service -c ~/Development/projects/IAGL/redemption-flight-tax-fees-charges-service || tmux a -t redemption-flight-tax-fees-charges-service"
 alias IAGLOCEXTRACT="cd ~/Development/projects/IAGL/redemption-oag-data-extractor"
+alias TXIAGLOCEXTRACT="tmux new -s redemption-oag-data-extractor -c ~/Development/projects/IAGL/redemption-oag-data-extractor || tmux a -t redemption-oag-data-extractor"
+alias TXIAGFABINFRA="tmux new -s redemption-availability-infrastructure -c ~/Development/projects/IAGL/redemption-availability-infrastructure || tmux a -t redemption-availability-infrastructure"
 alias greset="git fetch && git reset --hard origin/\$(git rev-parse --abbrev-ref HEAD)"
 alias gst="git status"
 alias gss="git stash"
@@ -179,5 +187,7 @@ alias gsp="git stash pop"
 bindkey -v
 # npm global
 export PATH=~/.npm-global/bin:$PATH
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+export PATH="/opt/homebrew/opt/unzip/bin:$PATH"
 
 [ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh
