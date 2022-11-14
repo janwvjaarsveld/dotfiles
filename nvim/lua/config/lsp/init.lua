@@ -15,8 +15,13 @@ local lsp_signature = require "lsp_signature"
 lsp_signature.setup {
   bind = true,
   handler_opts = {
-    border = "rounded",
+    border = "single",
   },
+  debug = true,
+  max_width = 80,
+  toggle_key = "<C-h>",
+  floating_window = true,
+  hint_enable = false,
 }
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -32,6 +37,17 @@ local function on_attach(client, bufnr)
 
   -- Configure key mappings
   require("config.lsp.keymaps").setup(client, bufnr)
+
+  -- Format on save
+  if client.server_capabilities.documentFormattingProvider then
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = vim.api.nvim_create_augroup("Format", { clear = true }),
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.formatting_seq_sync()
+      end
+    })
+  end
 end
 
 local opts = {

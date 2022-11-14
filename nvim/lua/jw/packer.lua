@@ -6,13 +6,13 @@ return require('packer').startup(function(use)
 
   use('nvim-lua/plenary.nvim')
 
-  use({'nvim-telescope/telescope.nvim', tag = '0.1.0',
-          requires = { {'nvim-lua/plenary.nvim'} }
-        })
+  use({ 'nvim-telescope/telescope.nvim', tag = '0.1.0',
+    requires = { { 'nvim-lua/plenary.nvim' } }
+  })
 
   use('nvim-treesitter/nvim-treesitter', {
-          run = ':TSUpdate'
-         })
+    run = ':TSUpdate'
+  })
 
   use('ThePrimeagen/git-worktree.nvim')
 
@@ -20,14 +20,14 @@ return require('packer').startup(function(use)
 
   use({ 'numToStr/Comment.nvim',
     config = function()
-        require('Comment').setup()
+      require('Comment').setup()
     end
-    })
+  })
 
-  use ({ 'nvim-tree/nvim-tree.lua',
-         requires = { 'nvim-tree/nvim-web-devicons', -- optional, for file icons
-        }, tag = 'nightly' -- optional, updated every week. (see issue #1193)
-      })
+  use({ 'nvim-tree/nvim-tree.lua',
+    requires = { 'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    }, tag = 'nightly' -- optional, updated every week. (see issue #1193)
+  })
 
   use("mbbill/undotree")
 
@@ -43,19 +43,44 @@ return require('packer').startup(function(use)
   })
 
   -- LSP
-  use({
-    "neovim/nvim-lspconfig",
-    opt = true,
-    event = "BufReadPre",
-    wants = { "cmp-nvim-lsp", "nvim-lsp-installer", "lsp_signature.nvim" },
-    config = function()
-      require("config.lsp").setup()
-    end,
-    requires = {
-      "williamboman/nvim-lsp-installer",
-      "ray-x/lsp_signature.nvim",
-    },
-  })
+  -- use({
+  --   "neovim/nvim-lspconfig",
+  --   opt = true,
+  --   event = "BufReadPre",
+  --   wants = { "cmp-nvim-lsp", "nvim-lsp-installer", "lsp_signature.nvim" },
+  --   config = function()
+  --     require("config.lsp").setup()
+  --   end,
+  --   requires = {
+  --     "williamboman/nvim-lsp-installer",
+  --     "ray-x/lsp_signature.nvim",
+  --   },
+  -- })
+
+  use("williamboman/mason.nvim")
+  use("williamboman/mason-lspconfig.nvim")
+  use("neovim/nvim-lspconfig")
+  use("ray-x/lsp_signature.nvim")
+
+
+  use('jose-elias-alvarez/null-ls.nvim')
+  use('MunifTanjim/prettier.nvim')
+  -- use({
+  --   "neovim/nvim-lspconfig",
+  --   opt = true,
+  --   event = "BufReadPre",
+  --   wants = { "cmp-nvim-lsp", "mason", "mason-lspconfig", "lsp_signature.nvim" },
+  --   config = function()
+  --     require("config.lsp").setup()
+  --   end,
+  --   requires = {
+  --     "williamboman/mason.nvim",
+  --     "williamboman/mason-lspconfig.nvim",
+  --     "ray-x/lsp_signature.nvim",
+  --   },
+  -- })
+
+  use("hrsh7th/cmp-nvim-lsp")
 
   use({
     "hrsh7th/nvim-cmp",
@@ -75,7 +100,6 @@ return require('packer').startup(function(use)
       "hrsh7th/cmp-calc",
       "f3fora/cmp-spell",
       "hrsh7th/cmp-emoji",
-      "hrsh7th/cmp-nvim-lsp",
       {
         "L3MON4D3/LuaSnip",
         wants = "friendly-snippets",
@@ -87,4 +111,5 @@ return require('packer').startup(function(use)
     },
     disable = false,
   })
+  use("nvim-lua/lsp_extensions.nvim")
 end)

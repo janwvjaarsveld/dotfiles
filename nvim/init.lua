@@ -1,1 +1,2 @@
 require("jw")
+require("config")

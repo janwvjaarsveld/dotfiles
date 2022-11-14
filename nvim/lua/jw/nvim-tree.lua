@@ -65,4 +65,4 @@ require("nvim-tree").setup({
 
 nnoremap("<C-t>", ":NvimTreeToggle<CR>")
 nnoremap("<leader>ut", ":NvimTreeRefresh<CR>")
-nnoremap("<leader>t", ":NvimTreeFind<CR>")
+nnoremap("<leader>t", ":NvimTreeFindFile<CR>")

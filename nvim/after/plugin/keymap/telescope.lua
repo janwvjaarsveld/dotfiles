@@ -13,7 +13,7 @@ nnoremap("<Leader>pf", function()
     require('telescope.builtin').find_files()
 end)
 
-nnoremap("<leader>tt", function()
+nnoremap("<leader>lg", function()
     require('telescope.builtin').live_grep()
 end)
 

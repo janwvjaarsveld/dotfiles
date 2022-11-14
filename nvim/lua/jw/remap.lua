@@ -11,4 +11,3 @@ nnoremap("<leader>rr", ":bufdo e<CR>")
 
 -- Close file in buffer
 nnoremap("<leader>qq", ":bd<CR>")
-
