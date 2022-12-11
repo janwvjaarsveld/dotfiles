@@ -1,6 +1,6 @@
 export ZSH="$HOME/.oh-my-zsh"
 # Use spaceship theme
-ZSH_THEME="spaceship"
+source "/opt/homebrew/opt/spaceship/spaceship.zsh"
 autoload -U promptinit; promptinit
 export UPDATE_ZSH_DAYS=30
 
@@ -143,6 +143,7 @@ SPACESHIP_RPROMPT_ORDER=(
    SPACESHIP_TERRAFORM_SUFFIX="$SPACESHIP_PROMPT_DEFAULT_SUFFIX"
    SPACESHIP_TERRAFORM_SYMBOL="🛠️ "
    SPACESHIP_TERRAFORM_COLOR=105
+
 source $ZSH/oh-my-zsh.sh
 
 export NVM_DIR="$HOME/.nvm"
@@ -164,21 +165,22 @@ alias ohmyzsh="vim ~/.oh-my-zsh"
 alias vimrc='vim ~/.vimrc'
 alias szsh="source ~/.zshrc"
 alias fixlogi="sudo pkill -9 logiopt"
+alias tmux-session="~/dotfiles/tmux/create-tmux-session.sh"
 
 # Example aliases
 alias IAGRPF="cd ~/Development/projects/IAGL/reward-platform"
-alias TXIAGRPF="tmux new -s reward-platform -c ~/Development/projects/IAGL/reward-platform || tmux a -t reward-platform"
+alias TXIAGRPF="tmux-session reward-platform ~/Development/projects/IAGL/reward-platform"
 alias IAGFAB="cd ~/Development/projects/IAGL/redemption-flight-availability-service"
-alias TXIAGFAB="tmux new -s redemption-flight-availability-service -c ~/Development/projects/IAGL/redemption-flight-availability-service || tmux a -t redemption-flight-availability-service"
+alias TXIAGFAB="tmux-session redemption-flight-availability-service ~/Development/projects/IAGL/redemption-flight-availability-service"
 alias IAGLOC="cd ~/Development/projects/IAGL/redemption-locations-service"
-alias TXIAGLOC="tmux new -s redemption-locations-service -c ~/Development/projects/IAGL/redemption-locations-service || tmux a -t redemption-locations-service"
+alias TXIAGLOC="tmux-session redemption-locations-service ~/Development/projects/IAGL/redemption-locations-service"
 alias IAGLOCINFRA="cd ~/Development/projects/IAGL/redemption-locations-infrastructure"
-alias TXIAGLOCINFRA="tmux new -s redemption-locations-infrastructure -c ~/Development/projects/IAGL/redemption-locations-infrastructure || tmux a -t redemption-locations-infrastructure"
+alias TXIAGLOCINFRA="tmux-session redemption-locations-infrastructure ~/Development/projects/IAGL/redemption-locations-infrastructure"
 alias IAGTFC="cd ~/Development/projects/IAGL/redemption-flight-tax-fees-charges-service"
-alias TXIAGTFC="tmux new -s redemption-flight-tax-fees-charges-service -c ~/Development/projects/IAGL/redemption-flight-tax-fees-charges-service || tmux a -t redemption-flight-tax-fees-charges-service"
+alias TXIAGTFC="tmux-session redemption-flight-tax-fees-charges-service ~/Development/projects/IAGL/redemption-flight-tax-fees-charges-service"
 alias IAGLOCEXTRACT="cd ~/Development/projects/IAGL/redemption-oag-data-extractor"
-alias TXIAGLOCEXTRACT="tmux new -s redemption-oag-data-extractor -c ~/Development/projects/IAGL/redemption-oag-data-extractor || tmux a -t redemption-oag-data-extractor"
-alias TXIAGFABINFRA="tmux new -s redemption-availability-infrastructure -c ~/Development/projects/IAGL/redemption-availability-infrastructure || tmux a -t redemption-availability-infrastructure"
+alias TXIAGLOCEXTRACT="tmux-session redemption-oag-data-extractor ~/Development/projects/IAGL/redemption-oag-data-extractor"
+alias TXIAGFABINFRA="tmux-session redemption-availability-infrastructure ~/Development/projects/IAGL/redemption-availability-infrastructure"
 alias greset="git fetch && git reset --hard origin/\$(git rev-parse --abbrev-ref HEAD)"
 alias gst="git status"
 alias gss="git stash"
