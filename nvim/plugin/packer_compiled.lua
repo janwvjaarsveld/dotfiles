@@ -242,7 +242,7 @@ _G.packer_plugins = {
     url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-calc", "cmp-cmdline", "cmp-emoji", "LuaSnip", "cmp-nvim-lua", "cmp-spell", "friendly-snippets", "cmp-treesitter", "cmp_luasnip", "cmp-buffer", "cmp-path" },
+    after = { "cmp-treesitter", "cmp_luasnip", "cmp-calc", "cmp-emoji", "cmp-buffer", "cmp-nvim-lua", "friendly-snippets", "cmp-path", "cmp-spell", "cmp-cmdline", "LuaSnip" },
     config = { "\27LJ\2\n8\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\15config.cmp\frequire\0" },
     loaded = false,
     needs_bufread = false,

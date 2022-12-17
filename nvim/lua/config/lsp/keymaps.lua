@@ -9,7 +9,7 @@ nnoremap("]e", "<cmd>lua vim.diagnostic.goto_next({severity = vim.diagnostic.sev
 local key_maps = {
   { key = 'gr', func = require('navigator.reference').async_ref, desc = 'async_ref' },
   { key = '<Leader>gr', func = require('navigator.reference').reference, desc = 'reference' }, -- reference deprecated
-  { mode = 'i', key = '<M-k>', func = vim.lsp.signature_help, desc = 'signature_help' },
+  { mode = 'i', key = '<c-k>', func = vim.lsp.signature_help, desc = 'signature_help' },
   { key = '<c-k>', func = vim.lsp.buf.signature_help, desc = 'signature_help' },
   { key = 'g0', func = require('navigator.symbols').document_symbols, desc = 'document_symbols' },
   { key = 'gW', func = require('navigator.workspace').workspace_symbol_live, desc = 'workspace_symbol_live' },
