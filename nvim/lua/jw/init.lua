@@ -1,8 +1,5 @@
 require("jw.set")
 require("jw.remap")
-require("jw.packer")
-require("jw.telescope")
-require("jw.nvim-tree")
 
 local augroup = vim.api.nvim_create_augroup
 local jwGroup = augroup('jw', {})
@@ -29,7 +26,7 @@ autocmd('TextYankPost', {
 autocmd({ "BufWritePre" }, {
   group = jwGroup,
   pattern = "*",
-  command = "%s/\\s\\+$//e",
+  command = [[%s/\\s\\+$//e]],
 })
 
 autocmd('BufReadPost', {
@@ -42,11 +39,3 @@ autocmd('BufReadPost', {
     end
   end
 })
-
-vim.g.netrw_browse_split = 0
-vim.g.netrw_banner = 0
-vim.g.netrw_winsize = 25
-
--- copilot remapping
-vim.api.nvim_set_keymap("i", "<C-l>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
-vim.g.copilot_no_tab_map = true

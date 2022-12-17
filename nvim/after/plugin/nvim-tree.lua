@@ -1,11 +1,10 @@
-local nnoremap = require("jw.keymap").nnoremap
+vim.keymap.set("n", "<C-t>", vim.cmd.NvimTreeToggle)
+vim.keymap.set("n", "<leader>ut", vim.cmd.NvimTreeRefresh)
+vim.keymap.set("n", "<leader>t", vim.cmd.NvimTreeFindFile)
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 --
--- set termguicolors to enable highlight groups
-vim.opt.termguicolors = true
-
 local lib = require("nvim-tree.lib")
 
 local git_stage = function()
@@ -85,7 +84,3 @@ require("nvim-tree").setup({
     timeout = 500,
   },
 })
-
-nnoremap("<C-t>", ":NvimTreeToggle<CR>")
-nnoremap("<leader>ut", ":NvimTreeRefresh<CR>")
-nnoremap("<leader>t", ":NvimTreeFindFile<CR>")

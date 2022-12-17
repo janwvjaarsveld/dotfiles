@@ -17,6 +17,7 @@ return require('packer').startup(function(use)
     end
   })
 
+  use('jose-elias-alvarez/null-ls.nvim')
   use('MunifTanjim/prettier.nvim')
 
   use({ 'nvim-telescope/telescope.nvim', tag = '0.1.0',
@@ -24,13 +25,19 @@ return require('packer').startup(function(use)
   })
 
   use({ 'rose-pine/neovim',
-    as = 'rose-pine',
-    config = function() vim.cmd('colorscheme rose-pine') end
+    as = 'rose-pine'
   })
 
   use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' })
   use('nvim-treesitter/playground')
   use('theprimeagen/harpoon')
+
+  use({ 'nvim-tree/nvim-tree.lua',
+    requires = { 'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    }, tag = 'nightly' -- optional, updated every week. (see issue #1193)
+  })
+  use('ThePrimeagen/git-worktree.nvim')
+
   use('mbbill/undotree')
   use('tpope/vim-fugitive')
 
@@ -54,4 +61,6 @@ return require('packer').startup(function(use)
       { 'rafamadriz/friendly-snippets' },
     }
   })
+
+  use("github/copilot.vim")
 end)

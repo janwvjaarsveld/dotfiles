@@ -1,4 +1,5 @@
 vim.opt.guicursor = ""
+vim.opt.termguicolors = true
 
 vim.opt.smartindent = true
 
@@ -7,10 +8,11 @@ vim.g.mapleader = " "
 vim.opt.filetype = "on"
 
 -- Set swap files directory
+vim.opt.swapfile = false
 vim.opt.directory = os.getenv("HOME") .. "/.vim/swap//"
 
 -- Allow copy and paste from VIM
-vim.opt.mouse = r
+vim.opt.mouse = "r"
 
 -- Use new regular expression engine
 vim.opt.re = 0
@@ -71,5 +73,10 @@ vim.opt.undoreload = 10000
 
 -- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 -- delays and poor user experience.
-vim.opt.updatetime = 300
+vim.opt.updatetime = 50
 
+vim.opt.scrolloff = 5
+vim.opt.signcolumn = "yes"
+vim.opt.isfname:append("@-@")
+
+vim.opt.colorcolumn = "80"

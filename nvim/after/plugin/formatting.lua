@@ -9,7 +9,7 @@ prettier.setup({
         check_package_json = true,
       })
     end,
-    runtime_condition = function(params)
+    runtime_condition = function()
       -- return false to skip running prettier
       return true
     end,
