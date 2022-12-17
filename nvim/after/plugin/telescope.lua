@@ -23,7 +23,7 @@ require("telescope").setup({
 
 require("telescope").load_extension("git_worktree")
 
-function reload_modules()
+local function reload_modules()
   -- Because TJ gave it to me.  Makes me happpy.  Put it next to his other
   -- awesome things.
   local lua_dirs = vim.fn.glob("./lua/*", 0, 1)
@@ -33,7 +33,7 @@ function reload_modules()
   end
 end
 
-function search_dotfiles()
+local function search_dotfiles()
   require("telescope.builtin").find_files({
     prompt_title = "< VimRC >",
     cwd = vim.env.DOTFILES,
@@ -41,7 +41,7 @@ function search_dotfiles()
   })
 end
 
-function git_branches(opts)
+local function git_branches(opts)
   opts = opts or {}
   opts.attach_mappings = function(_, map)
     map("i", "<c-d>", actions.git_delete_branch)
