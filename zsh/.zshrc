@@ -7,6 +7,7 @@ fi
 
 export ZSH="$HOME/.oh-my-zsh"
 export UPDATE_ZSH_DAYS=30
+export EDITOR="nvim"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Enable autocorrection
@@ -54,18 +55,18 @@ alias tmux-session="~/dotfiles/tmux/create-tmux-session.sh"
 
 # Example aliases
 alias IAGRPF="cd ~/Development/projects/IAGL/reward-platform"
-alias TXIAGRPF="tmux-session reward-platform ~/Development/projects/IAGL/reward-platform"
+alias TXIAGRPF="tmuxinator default ~/Development/projects/IAGL/reward-platform"
 alias IAGFAB="cd ~/Development/projects/IAGL/redemption-flight-availability-service"
-alias TXIAGFAB="tmux-session redemption-flight-availability-service ~/Development/projects/IAGL/redemption-flight-availability-service"
+alias TXIAGFAB="tmuxinator default ~/Development/projects/IAGL/redemption-flight-availability-service"
 alias IAGLOC="cd ~/Development/projects/IAGL/redemption-locations-service"
-alias TXIAGLOC="tmux-session redemption-locations-service ~/Development/projects/IAGL/redemption-locations-service"
+alias TXIAGLOC="tmuxinator default ~/Development/projects/IAGL/redemption-locations-service"
 alias IAGLOCINFRA="cd ~/Development/projects/IAGL/redemption-locations-infrastructure"
-alias TXIAGLOCINFRA="tmux-session redemption-locations-infrastructure ~/Development/projects/IAGL/redemption-locations-infrastructure"
+alias TXIAGLOCINFRA="tmuxinator default ~/Development/projects/IAGL/redemption-locations-infrastructure"
 alias IAGTFC="cd ~/Development/projects/IAGL/redemption-flight-tax-fees-charges-service"
-alias TXIAGTFC="tmux-session redemption-flight-tax-fees-charges-service ~/Development/projects/IAGL/redemption-flight-tax-fees-charges-service"
+alias TXIAGTFC="tmuxinator default ~/Development/projects/IAGL/redemption-flight-tax-fees-charges-service"
 alias IAGLOCEXTRACT="cd ~/Development/projects/IAGL/redemption-oag-data-extractor"
-alias TXIAGLOCEXTRACT="tmux-session redemption-oag-data-extractor ~/Development/projects/IAGL/redemption-oag-data-extractor"
-alias TXIAGFABINFRA="tmux-session redemption-availability-infrastructure ~/Development/projects/IAGL/redemption-availability-infrastructure"
+alias TXIAGLOCEXTRACT="tmuxinator default ~/Development/projects/IAGL/redemption-oag-data-extractor"
+alias TXIAGFABINFRA="tmuxinator default ~/Development/projects/IAGL/redemption-availability-infrastructure"
 alias greset="git fetch && git reset --hard origin/\$(git rev-parse --abbrev-ref HEAD)"
 alias gst="git status"
 alias gss="git stash"
