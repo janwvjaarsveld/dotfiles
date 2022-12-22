@@ -16,6 +16,10 @@ autocmd("BufWinEnter", {
     vim.keymap.set("n", "<leader>p", function()
       vim.cmd.Git('push')
     end, opts)
+    -- force push
+    vim.keymap.set("n", "<leader>p!", function()
+      vim.cmd.Git('push --force-with-lease')
+    end, opts)
 
     -- rebase always
     vim.keymap.set("n", "<leader>P", function()
@@ -24,8 +28,20 @@ autocmd("BufWinEnter", {
 
     -- NOTE: It allows me to easily set the branch i am pushing and any tracking
     -- needed if i did not set the branch up correctly
-    vim.keymap.set("n", "<leader>t", ":Git push -u origin ", opts);
+    vim.keymap.set("n", "<leader>t", function()
+      vim.cmd.Git('push -u origin ')
+    end, opts);
 
+    -- Git commit mappings
+    -- Git commit with message
     vim.keymap.set("n", "<leader>c", ":Git commit -m ", opts);
+    -- Git commit ammend without editing message
+    vim.keymap.set("n", "<leader>ca!", function()
+      vim.cmd.Git('commit --amend --no-edit')
+    end, opts);
+    -- Git commit ammend with editing message
+    vim.keymap.set("n", "<leader>ca", function()
+      vim.cmd.Git('commit --amend')
+    end, opts);
   end,
 })
