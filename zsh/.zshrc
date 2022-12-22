@@ -28,6 +28,7 @@ plugins=(
   zsh-autosuggestions
   colored-man-pages
   colorize
+  web-search
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -46,12 +47,11 @@ export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
 # My useful aliases
 alias c="clear"
 alias q="exit"
-alias zsh="vim ~/.zshrc"
-alias ohmyzsh="vim ~/.oh-my-zsh"
-alias vimrc='vim ~/.vimrc'
+alias zsh="nvim ~/.zshrc"
+alias ohmyzsh="nvim ~/.oh-my-zsh"
+alias vimrc='nvim ~/.vimrc'
 alias szsh="source ~/.zshrc"
 alias fixlogi="sudo pkill -9 logiopt"
-alias tmux-session="~/dotfiles/tmux/create-tmux-session.sh"
 
 # Example aliases
 alias IAGRPF="cd ~/Development/projects/IAGL/reward-platform"

@@ -11,6 +11,9 @@ null_ls.setup({
   sources = {
     formatting.stylua,
     formatting.fixjson,
+    formatting.shfmt.with({
+      filetypes = { "sh", "zsh" },
+    }),
     code_actions.eslint_d,
   },
   on_attach = function(client, bufnr)
