@@ -1,0 +1,53 @@
+# ~/.tmuxinator/iagl-projects.yaml
+
+name: iagl-projects
+root: ~/Development/projects/IAGL/
+windows:
+  - reward-platform:
+      layout: 75f2,333x87,0,0{233x87,0,0,28,99x87,234,0,29}
+      root: ~/Development/projects/IAGL/reward-platform
+      panes:
+        - editor:
+            - "nvim"
+            - ":NvimTreeToggle"
+        - ~
+  - redemption-flight-tax-fees-charges-service:
+      layout: 75f2,333x87,0,0{233x87,0,0,28,99x87,234,0,29}
+      root: ~/Development/projects/IAGL/redemption-flight-tax-fees-charges-service
+      panes:
+        - editor:
+            - "nvim"
+            - ":NvimTreeToggle"
+        - ~
+  - redemption-locations-service:
+      layout: 75f2,333x87,0,0{233x87,0,0,28,99x87,234,0,29}
+      root: ~/Development/projects/IAGL/redemption-locations-service
+      panes:
+        - editor:
+            - "nvim"
+            - ":NvimTreeToggle"
+        - ~
+  - redemption-flight-availability-service:
+      layout: 75f2,333x87,0,0{233x87,0,0,28,99x87,234,0,29}
+      root: ~/Development/projects/IAGL/redemption-flight-availability-service
+      panes:
+        - editor:
+            - "nvim"
+            - ":NvimTreeToggle"
+        - ~
+  - redemption-locations-infrastructure:
+      layout: 75f2,333x87,0,0{233x87,0,0,28,99x87,234,0,29}
+      root: ~/Development/projects/IAGL/redemption-locations-infrastructure
+      panes:
+        - editor:
+            - "nvim"
+            - ":NvimTreeToggle"
+        - ~
+  - redemption-availability-infrastructure:
+      layout: 75f2,333x87,0,0{233x87,0,0,28,99x87,234,0,29}
+      root: ~/Development/projects/IAGL/redemption-availability-infrastructure
+      panes:
+        - editor:
+            - "nvim"
+            - ":NvimTreeToggle"
+        - ~

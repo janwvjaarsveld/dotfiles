@@ -1,0 +1,12 @@
+# ~/.tmuxinator/sample.yaml
+
+name: sample
+root: ~/
+windows:
+  - null:
+      layout: 75f2,333x87,0,0{233x87,0,0,28,99x87,234,0,29}
+      panes:
+        - editor:
+            - "nvim"
+            - ":NvimTreeToggle"
+        - ~

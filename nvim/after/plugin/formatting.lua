@@ -14,6 +14,9 @@ null_ls.setup({
     formatting.shfmt.with({
       filetypes = { "sh", "zsh" },
     }),
+    formatting.yamlfmt.with({
+      filetypes = { "yaml", "yml" },
+    }),
     code_actions.eslint_d,
   },
   on_attach = function(client, bufnr)

@@ -64,8 +64,8 @@ setup_tmuxinator() {
 	ln -sf $DOTFILES_DIR/tmuxinator $HOME/.config/
 }
 
-# setup_zsh
 # setup_nvim
+# setup_zsh
 # setup_tmux
 # setup_tmuxinator
 echo "Setting up development configuration... DONE"
