@@ -43,8 +43,6 @@ setup_nvim() {
 	brew install fd
 	echo "Symlinking $HOME/dotfiles/nvim to ~/.config/"
 	ln -sf $DOTFILES_DIR/nvim $HOME/.config/
-	echo "Installing packer..."
-	git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 }
 
 setup_tmux() {

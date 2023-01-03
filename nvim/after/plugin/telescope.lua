@@ -13,13 +13,16 @@ require("telescope").setup({
     mappings = {
       i = {
         ["<C-q>"] = actions.send_to_qflist,
-        ["<CR>"]  = actions.select_default,
+        ["<CR>"] = actions.select_default,
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
       },
     },
   },
 })
+
+-- Enable telescope fzf native, if installed
+pcall(require("telescope").load_extension, "fzf")
 
 require("telescope").load_extension("git_worktree")
 
@@ -43,53 +46,47 @@ end
 
 local function git_branches(opts)
   opts = opts or {}
-  opts.attach_mappings = function(_, map)
+  opts.attach_mappings =
+  function(_, map)
     map("i", "<c-d>", actions.git_delete_branch)
     map("n", "<c-d>", actions.git_delete_branch)
     return true
-  end,
-      require("telescope.builtin").git_branches(opts)
+  end, require("telescope.builtin").git_branches(opts)
 end
 
-local dropdownTheme = require('telescope.themes').get_dropdown
+local dropdownTheme = require("telescope.themes").get_dropdown
 
-vim.keymap.set("n", "<C-p>", ":Telescope")
-vim.keymap.set("n", "<leader>ps", function()
-  require('telescope.builtin').grep_string({ search = vim.fn.input("Grep For > ") })
-end)
+vim.keymap.set("n", "<leader>?", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
+vim.keymap.set("n", "<leader><space>", require("telescope.builtin").buffers, { desc = "[ ] Find existing buffers" })
+vim.keymap.set("n", "<leader>/", function()
+  -- You can pass additional configuration to telescope to change theme, layout, etc.
+  require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+    winblend = 10,
+    previewer = false,
+  }))
+end, { desc = "[/] Fuzzily search in current buffer]" })
+
+vim.keymap.set("n", "<leader>sf", require("telescope.builtin").find_files, { desc = "[S]earch [F]iles" })
+vim.keymap.set("n", "<leader>sh", require("telescope.builtin").help_tags, { desc = "[S]earch [H]elp" })
+vim.keymap.set("n", "<leader>sw", require("telescope.builtin").grep_string, { desc = "[S]earch current [W]ord" })
+vim.keymap.set("n", "<leader>sg", require("telescope.builtin").live_grep, { desc = "[S]earch by [G]rep" })
+vim.keymap.set("n", "<leader>sd", require("telescope.builtin").diagnostics, { desc = "[S]earch [D]iagnostics" })
+
 vim.keymap.set("n", "<C-p>", function()
-  require('telescope.builtin').git_files()
-end)
-vim.keymap.set("n", "<Leader>pf", function()
-  require('telescope.builtin').find_files()
-end)
-
-vim.keymap.set("n", "<leader>lg", function()
-  require('telescope.builtin').live_grep()
-end)
-
-vim.keymap.set("n", "<leader>pw", function()
-  require('telescope.builtin').grep_string { search = vim.fn.expand("<cword>") }
-end)
-vim.keymap.set("n", "<leader>bb", function()
-  require('telescope.builtin').buffers()
-end)
-vim.keymap.set("n", "<leader>vh", function()
-  require('telescope.builtin').help_tags()
-end)
-
-vim.keymap.set("n", "<leader>vrc", function()
+  require("telescope.builtin").git_files()
+end, { desc = "[C-p] Search Git Files" })
+vim.keymap.set("n", "<leader>sdf", function()
   search_dotfiles()
-end)
+end, { desc = "[S]earch [D]ot[F]iles" })
 vim.keymap.set("n", "<leader>gb", function()
   git_branches(dropdownTheme())
-end)
+end, { desc = "[G]it [B]ranches" })
 vim.keymap.set("n", "<leader>gw", function()
-  require('telescope').extensions.git_worktree.git_worktrees(dropdownTheme())
-end)
+  require("telescope").extensions.git_worktree.git_worktrees(dropdownTheme())
+end, { desc = "[G]it [W]orktrees" })
 vim.keymap.set("n", "<leader>gcw", function()
-  require('telescope').extensions.git_worktree.create_git_worktree(dropdownTheme())
-end)
+  require("telescope").extensions.git_worktree.create_git_worktree(dropdownTheme())
+end, { desc = "[G]it [C]reate [W]orktree" })
 vim.keymap.set("n", "<leader>gs", function()
-  require('telescope.builtin').git_status(dropdownTheme())
-end)
+  require("telescope.builtin").git_status(dropdownTheme())
+end, { desc = "[G]it [S]tatus" })
