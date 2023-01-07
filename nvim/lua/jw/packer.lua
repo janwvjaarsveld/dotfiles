@@ -25,9 +25,6 @@ require("packer").startup(function(use)
     end,
   })
 
-  use("jose-elias-alvarez/null-ls.nvim")
-  use("MunifTanjim/prettier.nvim")
-
   use({ "nvim-telescope/telescope.nvim", tag = "0.1.0", requires = { { "nvim-lua/plenary.nvim" } } })
 
   use({ "rose-pine/neovim", as = "rose-pine" })
@@ -72,6 +69,10 @@ require("packer").startup(function(use)
       { "rafamadriz/friendly-snippets" },
     },
   })
+
+  use("jose-elias-alvarez/null-ls.nvim")
+  use("jayp0521/mason-null-ls.nvim")
+  -- use("MunifTanjim/prettier.nvim")
 
   -- Add indentation guides even on blank lines
   use({

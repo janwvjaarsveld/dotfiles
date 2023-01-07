@@ -1,7 +1,19 @@
-local lsp = require("lsp-zero")
-local lspkind = require("lspkind")
+local lsp_ok, lsp = pcall(require, "lsp-zero")
+if not lsp_ok then
+  return
+end
 
-lsp.preset("recommended")
+local lspkind_ok, lspkind = pcall(require, "lspkind")
+if not lspkind_ok then
+  return
+end
+
+local mason_ok, mason = pcall(require, "mason")
+if not mason_ok then
+  return
+end
+
+mason.setup()
 
 lsp.ensure_installed({
   "tsserver",
@@ -9,7 +21,24 @@ lsp.ensure_installed({
   "rust_analyzer",
 })
 
-local cmp = require("cmp")
+-- lsp.preset("recommended")
+
+lsp.set_preferences({
+  suggest_lsp_servers = true,
+  setup_servers_on_start = true,
+  sign_icons = {
+    error = "✘",
+    warn = "▲",
+    hint = "⚑",
+    info = "",
+  },
+})
+
+local cmp_ok, cmp = pcall(require, "cmp")
+if not cmp_ok then
+  return
+end
+
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
   ["<C-k>"] = cmp.mapping.select_prev_item(cmp_select),
@@ -43,7 +72,7 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
   }),
 })
 
-lsp.setup_nvim_cmp({
+local cmp_config = lsp.defaults.cmp_config({
   mapping = cmp_mappings,
   formatting = {
     format = lspkind.cmp_format({
@@ -53,6 +82,8 @@ lsp.setup_nvim_cmp({
     }),
   },
 })
+
+cmp.setup(cmp_config)
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline({ "/", "?" }, {
@@ -72,17 +103,6 @@ cmp.setup.cmdline(":", {
   }),
 })
 
-lsp.set_preferences({
-  suggest_lsp_servers = true,
-  setup_servers_on_start = true,
-  sign_icons = {
-    error = "✘",
-    warn = "▲",
-    hint = "⚑",
-    info = "",
-  },
-})
-
 vim.diagnostic.config({
   virtual_text = true,
 })
@@ -99,26 +119,20 @@ local function organize_imports()
   vim.lsp.buf.execute_command(params)
 end
 
-lsp.configure("tsserver", {
-  commands = {
-    OrganizeImports = {
-      organize_imports,
-      description = "Organize Imports",
-    },
-  },
-})
+local cmp_nvim_lsp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if not cmp_nvim_lsp_ok then
+  return
+end
 
-lsp.configure("sumneko_lua", {
-  settings = {
-    Lua = {
-      diagnostics = { globals = { "vim" } },
-    },
-  },
-})
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+lsp.capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
-lsp.on_attach(function(client, bufnr)
+local on_attach = function(client, bufnr)
   print("LSP attached to " .. client.name)
   local opts = { buffer = bufnr, remap = false }
+  if client.name == "tsserver" then
+    client.server_capabilities.document_formatting = false
+  end
 
   if client.name == "eslint" then
     vim.cmd.LspStop("eslint")
@@ -140,6 +154,25 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
   vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
   vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-end)
+end
+
+lsp.configure("tsserver", {
+  commands = {
+    OrganizeImports = {
+      organize_imports,
+      description = "Organize Imports",
+    },
+  },
+})
+
+lsp.configure("sumneko_lua", {
+  settings = {
+    Lua = {
+      diagnostics = { globals = { "vim" } },
+    },
+  },
+})
+
+lsp.on_attach(on_attach)
 
 lsp.setup()

@@ -1,23 +1,20 @@
-local null_ls = require("null-ls")
+local present, null_ls = pcall(require, "null-ls")
+
+if not present then
+  return
+end
 
 local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
 local event = "BufWritePre" -- or "BufWritePost"
 local async = event == "BufWritePost"
 
 local formatting = null_ls.builtins.formatting
-local code_actions = null_ls.builtins.code_actions
 
 null_ls.setup({
   sources = {
-    formatting.stylua,
-    formatting.fixjson,
     formatting.shfmt.with({
       filetypes = { "sh", "zsh" },
     }),
-    -- formatting.yamlfmt.with({
-    --   filetypes = { "yaml", "yml" },
-    -- }),
-    code_actions.eslint_d,
   },
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then
@@ -45,19 +42,15 @@ null_ls.setup({
   end,
 })
 
-local prettier = require("prettier")
-prettier.setup({
-  ["null-ls"] = {
-    condition = function()
-      return prettier.config_exists({
-        -- if `false`, skips checking `package.json` for `"prettier"` key
-        check_package_json = true,
-      })
-    end,
-    runtime_condition = function()
-      -- return false to skip running prettier
-      return true
-    end,
-    timeout = 5000,
-  },
+-- Reuse the Mason registered formatters and LSP server in null-ls,
+-- easiest way is the use of jay-babu/mason-null-ls.nvim package.
+-- see documentation of null-null-ls for more configuration options!
+local mason_nullls_ok, mason_nullls = pcall(require, "mason-null-ls")
+if not mason_nullls_ok then
+  return
+end
+mason_nullls.setup({
+  automatic_installation = true,
+  automatic_setup = true,
 })
+mason_nullls.setup_handlers({})

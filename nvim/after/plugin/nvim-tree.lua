@@ -1,6 +1,7 @@
 vim.keymap.set("n", "<C-t>", vim.cmd.NvimTreeToggle)
 vim.keymap.set("n", "<leader>ut", vim.cmd.NvimTreeRefresh)
 vim.keymap.set("n", "<leader>t", vim.cmd.NvimTreeFindFile)
+vim.keymap.set("n", "<leader>uu", vim.cmd.UndotreeToggle)
 
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1
