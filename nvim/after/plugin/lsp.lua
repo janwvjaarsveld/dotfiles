@@ -8,20 +8,13 @@ if not lspkind_ok then
   return
 end
 
-local mason_ok, mason = pcall(require, "mason")
-if not mason_ok then
-  return
-end
-
-mason.setup()
-
 lsp.ensure_installed({
   "tsserver",
   "sumneko_lua",
   "rust_analyzer",
 })
 
--- lsp.preset("recommended")
+lsp.preset("recommended")
 
 lsp.set_preferences({
   suggest_lsp_servers = true,
@@ -47,29 +40,6 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
   ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
   ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
   ["<C-e>"] = cmp.mapping({ i = cmp.mapping.close(), c = cmp.mapping.close() }),
-  ["<CR>"] = cmp.mapping.confirm({ select = true }),
-  ["<Tab>"] = cmp.mapping(function(fallback)
-    if cmp.visible() then
-      cmp.select_next_item()
-    else
-      fallback()
-    end
-  end, {
-    "i",
-    "s",
-    "c",
-  }),
-  ["<S-Tab>"] = cmp.mapping(function(fallback)
-    if cmp.visible() then
-      cmp.select_prev_item()
-    else
-      fallback()
-    end
-  end, {
-    "i",
-    "s",
-    "c",
-  }),
 })
 
 local cmp_config = lsp.defaults.cmp_config({

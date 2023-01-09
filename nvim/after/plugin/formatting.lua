@@ -9,12 +9,17 @@ local event = "BufWritePre" -- or "BufWritePost"
 local async = event == "BufWritePost"
 
 local formatting = null_ls.builtins.formatting
+local code_actions = null_ls.builtins.code_actions
 
 null_ls.setup({
   sources = {
+    formatting.stylua,
+    formatting.fixjson,
     formatting.shfmt.with({
       filetypes = { "sh", "zsh" },
     }),
+    code_actions.eslint_d,
+    formatting.prettier,
   },
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then
@@ -50,7 +55,7 @@ if not mason_nullls_ok then
   return
 end
 mason_nullls.setup({
+  ensure_installed = nil,
   automatic_installation = true,
-  automatic_setup = true,
+  automatic_setup = false,
 })
-mason_nullls.setup_handlers({})
