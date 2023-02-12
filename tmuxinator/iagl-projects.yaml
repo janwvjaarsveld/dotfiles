@@ -27,6 +27,18 @@ windows:
         - editor:
             - "nvim"
             - ":NvimTreeToggle"
+  - redemption-flight-offer-service:
+      root: ~/Development/projects/IAGL/redemption-flight-offer-service
+      panes:
+        - editor:
+            - "nvim"
+            - ":NvimTreeToggle"
+  - reward-platform-terraform:
+      root: ~/Development/projects/IAGL/reward-platform-terraform
+      panes:
+        - editor:
+            - "nvim"
+            - ":NvimTreeToggle"
   - redemption-locations-infrastructure:
       root: ~/Development/projects/IAGL/redemption-locations-infrastructure
       panes:

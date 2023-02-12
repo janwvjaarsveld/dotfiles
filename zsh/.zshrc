@@ -37,8 +37,10 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-export JAVA_HOME=/opt/homebrew/Cellar/openjdk@11/11.0.17/libexec/openjdk.jdk/Contents/Home
+export JAVA_HOME=$(/usr/libexec/java_home -v 11)
+# export JAVA_HOME=$(/usr/libexec/java_home -v 17)
 export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -52,6 +54,7 @@ alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias vimrc='nvim ~/.vimrc'
 alias szsh="source ~/.zshrc"
 alias fixlogi="sudo pkill -9 logiopt"
+alias serve="python3 -m http.server"
 
 # Example aliases
 alias IAGRPF="cd ~/Development/projects/IAGL/reward-platform"
@@ -67,6 +70,8 @@ alias TXIAGTFC="tmuxinator default ~/Development/projects/IAGL/redemption-flight
 alias IAGLOCEXTRACT="cd ~/Development/projects/IAGL/redemption-oag-data-extractor"
 alias TXIAGLOCEXTRACT="tmuxinator default ~/Development/projects/IAGL/redemption-oag-data-extractor"
 alias TXIAGFABINFRA="tmuxinator default ~/Development/projects/IAGL/redemption-availability-infrastructure"
+alias JAVA11="export JAVA_HOME=$(/usr/libexec/java_home -v 11)"
+alias JAVA17="export JAVA_HOME=$(/usr/libexec/java_home -v 17)"
 alias greset="git fetch && git reset --hard origin/\$(git rev-parse --abbrev-ref HEAD)"
 alias gst="git status"
 alias gss="git stash"

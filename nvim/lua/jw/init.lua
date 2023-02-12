@@ -2,6 +2,8 @@ require("jw.set")
 require("jw.remap")
 require("jw.custom")
 require("jw.packer")
+require("jw.lsp")
+require("jw.bfs")
 
 local augroup = vim.api.nvim_create_augroup
 local jwGroup = augroup("jw", {})
