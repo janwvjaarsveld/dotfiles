@@ -68,11 +68,12 @@ require("packer").startup(function(use)
 		{ "rafamadriz/friendly-snippets" },
 	})
 
+	--Rust
+	use("simrat39/rust-tools.nvim")
+
 	-- Flutter
 	use("dart-lang/dart-vim-plugin")
-	use({
-		"akinsho/flutter-tools.nvim",
-	})
+	use({ "akinsho/flutter-tools.nvim", requires = "nvim-lua/plenary.nvim" })
 	use("Nash0x7E2/awesome-flutter-snippets")
 
 	use("jose-elias-alvarez/null-ls.nvim")
@@ -93,6 +94,21 @@ require("packer").startup(function(use)
 	use("github/copilot.vim")
 
 	use("David-Kunz/jester")
+	use("mfussenegger/nvim-dap")
+
+	use({
+		"akinsho/toggleterm.nvim",
+		tag = "*",
+		config = function()
+			require("toggleterm").setup({
+				direction = "float",
+				open_mapping = [[<c-\>]],
+				start_in_insert = true,
+				insert_mappings = true, -- whether or not the open mapping applies in insert mode
+				terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
+			})
+		end,
+	})
 
 	use("b0o/schemastore.nvim")
 	use({

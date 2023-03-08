@@ -52,7 +52,6 @@ vim.api.nvim_set_hl(0, "CmpItemKindMethod", { fg = "#C586C0" })
 vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = "#9CDCFE" })
 vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = "#D4D4D4" })
 
-
 vim.g.cmp_active = true
 
 local select_opts = { behavior = cmp.SelectBehavior.Select }
@@ -287,11 +286,11 @@ cmp.setup.cmdline({ "/", "?" }, {
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(":", {
-	mapping = cmp.mapping.preset.cmdline(),
-	sources = cmp.config.sources({
-		{ name = "path" },
-	}, {
-		{ name = "cmdline" },
-	}),
-})
+-- cmp.setup.cmdline(":", {
+-- 	mapping = cmp.mapping.preset.cmdline(),
+-- 	sources = cmp.config.sources({
+-- 		{ name = "nvim_lua" },
+-- 		{ name = "path" },
+-- 		{ name = "cmdline" },
+-- 	}),
+-- })

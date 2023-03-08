@@ -32,7 +32,7 @@ require("jw.lsp.lsp-signature")
 require("jw.lsp.mason")
 require("jw.lsp.handlers").setup()
 require("jw.lsp.null-ls")
-require("jw.lsp.cmp")
 require("jw.lsp.flutter-tools")
+require("jw.lsp.cmp")
 
 return M

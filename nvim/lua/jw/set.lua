@@ -81,8 +81,8 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.colorcolumn = "80"
 vim.api.nvim_create_autocmd("ColorScheme", {
-  pattern = "*",
-  callback = function()
-    vim.api.nvim_set_hl(0, "ColorColumn", { ctermbg = "White", bg = "#585858" })
-  end,
+	pattern = "*",
+	callback = function()
+		vim.api.nvim_set_hl(0, "ColorColumn", { ctermbg = "White", bg = "#585858" })
+	end,
 })

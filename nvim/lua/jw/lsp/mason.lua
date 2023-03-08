@@ -14,7 +14,7 @@ local servers = {
 	"html",
 	"jdtls",
 	"jsonls",
-	"sumneko_lua",
+	"lua_ls",
 	"tflint",
 	"terraformls",
 	"tsserver",

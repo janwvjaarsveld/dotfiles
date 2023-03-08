@@ -76,6 +76,7 @@ alias greset="git fetch && git reset --hard origin/\$(git rev-parse --abbrev-ref
 alias gst="git status"
 alias gss="git stash"
 alias gsp="git stash pop"
+alias excel="open -a /Applications/Microsoft\ Excel.app"
 
 bindkey -v
 # npm global
