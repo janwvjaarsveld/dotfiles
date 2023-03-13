@@ -5,6 +5,7 @@ require("jester").setup({
 	identifiers = { "test", "it", "describe" },
 	prepend = {},
 	path_to_jest_run = "yarn test",
+	terminal_cmd = ":ToggleTerm",
 	-- cmd = "echo $result | cut -c 2- | cut -d'$' -f 1 | xargs -I{} yarn test -t {}", -- run command
 })
 

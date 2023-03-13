@@ -160,11 +160,28 @@ return {
 		--
 		settings = {
 			["rust-analyzer"] = {
-				lens = {
-					enable = true,
+				imports = {
+					granularity = {
+						group = "module",
+					},
+					prefix = "self",
+				},
+				assist = {
+					importEnforceGranularity = true,
+					importPrefix = "crate",
+				},
+				cargo = {
+					allFeatures = true,
 				},
 				checkOnSave = {
 					command = "clippy",
+				},
+				inlayHints = { locationLinks = false },
+				diagnostics = {
+					enable = true,
+					experimental = {
+						enable = true,
+					},
 				},
 			},
 		},
