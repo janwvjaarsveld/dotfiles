@@ -115,9 +115,8 @@ require("packer").startup(function(use)
 		"SmiteshP/nvim-navic",
 		requires = "neovim/nvim-lspconfig",
 	})
-	-- use({
-	--   "klen/nvim-test",
-	-- })
+
+	use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" })
 
 	-- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
 	local has_plugins, plugins = pcall(require, "custom.plugins")
