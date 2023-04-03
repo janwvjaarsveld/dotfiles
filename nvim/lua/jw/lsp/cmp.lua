@@ -56,6 +56,74 @@ vim.g.cmp_active = true
 
 local select_opts = { behavior = cmp.SelectBehavior.Select }
 
+local cmp_mapping = {
+	["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(select_opts), { "i", "c" }),
+	["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(select_opts), { "i", "c" }),
+	["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4)),
+	["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4)),
+	["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+	-- toggle completion
+	["<C-e>"] = cmp.mapping(function(fallback)
+		if cmp.visible() then
+			cmp.abort()
+		else
+			cmp.complete()
+		end
+	end),
+	-- go to next placeholder in the snippet
+	["<C-d>"] = cmp.mapping(function(fallback)
+		if luasnip.jumpable(1) then
+			luasnip.jump(1)
+		else
+			fallback()
+		end
+	end, { "i", "s" }),
+
+	-- go to previous placeholder in the snippet
+	["<C-s>"] = cmp.mapping(function(fallback)
+		if luasnip.jumpable(-1) then
+			luasnip.jump(-1)
+		else
+			fallback()
+		end
+	end, { "i", "s" }),
+	-- Accept currently selected item. If none selected, `select` first item.
+	-- Set `select` to `false` to only confirm explicitly selected items.
+	["<CR>"] = cmp.mapping.confirm({ select = true }),
+	["<Tab>"] = cmp.mapping(function(fallback)
+		if cmp.visible() then
+			cmp.select_next_item()
+		elseif luasnip.jumpable(1) then
+			luasnip.jump(1)
+		elseif luasnip.expand_or_jumpable() then
+			luasnip.expand_or_jump()
+		elseif luasnip.expandable() then
+			luasnip.expand()
+		elseif check_backspace() then
+			cmp.complete()
+		else
+			fallback()
+		end
+	end, {
+		"i",
+		"s",
+		"c",
+	}),
+	["<S-Tab>"] = cmp.mapping(function(fallback)
+		if cmp.visible() then
+			cmp.select_prev_item()
+		elseif luasnip.jumpable(-1) then
+			luasnip.jump(-1)
+		else
+			fallback()
+		end
+	end, {
+		"i",
+		"s",
+		"c",
+	}),
+}
+
 cmp.setup({
 	enabled = function()
 		local buftype = vim.api.nvim_buf_get_option(0, "buftype")
@@ -70,71 +138,7 @@ cmp.setup({
 			luasnip.lsp_expand(args.body) -- For `luasnip` jws.
 		end,
 	},
-	mapping = cmp.mapping.preset.insert({
-		["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(select_opts), { "i", "c" }),
-		["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(select_opts), { "i", "c" }),
-		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4)),
-		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4)),
-		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-		-- toggle completion
-		["<C-e>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.abort()
-			else
-				cmp.complete()
-			end
-		end),
-		-- go to next placeholder in the snippet
-		["<C-d>"] = cmp.mapping(function(fallback)
-			if luasnip.jumpable(1) then
-				luasnip.jump(1)
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-
-		-- go to previous placeholder in the snippet
-		["<C-s>"] = cmp.mapping(function(fallback)
-			if luasnip.jumpable(-1) then
-				luasnip.jump(-1)
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-		-- Accept currently selected item. If none selected, `select` first item.
-		-- Set `select` to `false` to only confirm explicitly selected items.
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			elseif luasnip.jumpable(1) then
-				luasnip.jump(1)
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			elseif luasnip.expandable() then
-				luasnip.expand()
-			elseif check_backspace() then
-				cmp.complete()
-			else
-				fallback()
-			end
-		end, {
-			"i",
-			"s",
-		}),
-		["<S-Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			elseif luasnip.jumpable(-1) then
-				luasnip.jump(-1)
-			else
-				fallback()
-			end
-		end, {
-			"i",
-			"s",
-		}),
-	}),
+	mapping = cmp.mapping.preset.insert(cmp_mapping),
 	formatting = {
 		fields = { "kind", "abbr", "menu" },
 		-- format = lspkind.cmp_format({
@@ -286,11 +290,11 @@ cmp.setup.cmdline({ "/", "?" }, {
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
--- cmp.setup.cmdline(":", {
--- 	mapping = cmp.mapping.preset.cmdline(),
--- 	sources = cmp.config.sources({
--- 		{ name = "nvim_lua" },
--- 		{ name = "path" },
--- 		{ name = "cmdline" },
--- 	}),
--- })
+cmp.setup.cmdline(":", {
+	mapping = cmp.mapping.preset.insert(cmp_mapping),
+	sources = cmp.config.sources({
+		{ name = "nvim_lua" },
+		{ name = "path" },
+		{ name = "cmdline" },
+	}),
+})
