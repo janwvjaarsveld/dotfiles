@@ -1,7 +1,7 @@
 require("jw.set")
 require("jw.remap")
 require("jw.custom")
-require("jw.packer")
+require("jw.plugins")
 require("jw.lsp")
 require("jw.bfs")
 

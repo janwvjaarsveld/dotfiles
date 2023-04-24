@@ -127,4 +127,3 @@ mason_nullls.setup({
 	automatic_installation = true,
 	automatic_setup = true,
 })
-mason_nullls.setup_handlers({})

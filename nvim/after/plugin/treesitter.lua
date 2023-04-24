@@ -1,5 +1,5 @@
 require("nvim-treesitter.configs").setup({
-	ensure_installed = { "lua", "rust", "dockerfile", "go", "help", "javascript", "typescript" },
+	ensure_installed = { "lua", "rust", "dockerfile", "go", "vimdoc", "javascript", "typescript" },
 	sync_install = false,
 
 	-- Automatically install missing parsers when entering buffer
