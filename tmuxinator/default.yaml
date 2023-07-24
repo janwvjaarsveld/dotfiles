@@ -13,6 +13,4 @@ root: <%= @args[0] %>
 windows:
   - null:
       panes:
-        - editor:
-          - "nvim"
-          - ":NvimTreeToggle"
+        - editor: nvim

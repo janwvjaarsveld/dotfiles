@@ -5,6 +5,4 @@ root: ~/
 windows:
   - null:
       panes:
-        - editor:
-            - "nvim"
-            - ":NvimTreeToggle"
+        - editor: "nvim"

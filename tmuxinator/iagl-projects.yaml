@@ -6,48 +6,32 @@ windows:
   - reward-platform:
       root: ~/Development/projects/IAGL/reward-platform
       panes:
-        - editor:
-            - "nvim"
-            - ":NvimTreeToggle"
+        - editor: nvim
   - redemption-flight-tax-fees-charges-service:
       root: ~/Development/projects/IAGL/redemption-flight-tax-fees-charges-service
       panes:
-        - editor:
-            - "nvim"
-            - ":NvimTreeToggle"
+        - editor: nvim
   - redemption-locations-service:
       root: ~/Development/projects/IAGL/redemption-locations-service
       panes:
-        - editor:
-            - "nvim"
-            - ":NvimTreeToggle"
+        - editor: nvim
   - redemption-flight-availability-service:
       root: ~/Development/projects/IAGL/redemption-flight-availability-service
       panes:
-        - editor:
-            - "nvim"
-            - ":NvimTreeToggle"
+        - editor: nvim
   - redemption-flight-offer-service:
       root: ~/Development/projects/IAGL/redemption-flight-offer-service
       panes:
-        - editor:
-            - "nvim"
-            - ":NvimTreeToggle"
+        - editor: nvim
   - reward-platform-terraform:
       root: ~/Development/projects/IAGL/reward-platform-terraform
       panes:
-        - editor:
-            - "nvim"
-            - ":NvimTreeToggle"
+        - editor: nvim
   - redemption-locations-infrastructure:
       root: ~/Development/projects/IAGL/redemption-locations-infrastructure
       panes:
-        - editor:
-            - "nvim"
-            - ":NvimTreeToggle"
+        - editor: nvim
   - redemption-availability-infrastructure:
       root: ~/Development/projects/IAGL/redemption-availability-infrastructure
       panes:
-        - editor:
-            - "nvim"
-            - ":NvimTreeToggle"
+        - editor: nvim
