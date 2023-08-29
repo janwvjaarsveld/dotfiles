@@ -34,13 +34,13 @@ setup_zsh() {
 
 setup_nvim() {
 	echo "Setting up nvim..."
-	brew install neovim
-	brew install python3
-	brew install nvm
-	brew install yarn
-	brew install ripgrep
-	brew install the_silver_searcher
-	brew install fd
+# brew install neovim
+# brew install python3
+# brew install nvm
+# brew install yarn
+# brew install ripgrep
+# brew install the_silver_searcher
+# brew install fd
 	echo "Symlinking $HOME/dotfiles/nvim to ~/.config/"
 	ln -sf $DOTFILES_DIR/nvim $HOME/.config/
 }
@@ -62,7 +62,7 @@ setup_tmuxinator() {
 	ln -sf $DOTFILES_DIR/tmuxinator $HOME/.config/
 }
 
-# setup_nvim
+ setup_nvim
 # setup_zsh
 # setup_tmux
 # setup_tmuxinator
