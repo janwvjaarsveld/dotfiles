@@ -32,3 +32,10 @@ vim.keymap.set(
 -- Move selected line / block of text in visual mode
 vim.keymap.set("v", "<C-j>", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "<C-k>", ":m '<-2<CR>gv=gv")
+
+-- Paste from clipboard
+vim.keymap.set("n", '<leader>"', [["+p]], { desc = "Paste from clipboard" })
+
+-- Jump multiple lines up/down using arrow keys
+vim.keymap.set("n", "<Down>", "5j", { noremap = true, silent = true, desc = "Jump 5 lines down" })
+vim.keymap.set("n", "<Up>", "5k", { noremap = true, silent = true, desc = "Jump 5 lines up" })
