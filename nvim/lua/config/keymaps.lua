@@ -37,5 +37,7 @@ vim.keymap.set("v", "<C-k>", ":m '<-2<CR>gv=gv")
 vim.keymap.set("n", '<leader>"', [["+p]], { desc = "Paste from clipboard" })
 
 -- Jump multiple lines up/down using arrow keys
-vim.keymap.set("n", "<Down>", "5j", { noremap = true, silent = true, desc = "Jump 5 lines down" })
-vim.keymap.set("n", "<Up>", "5k", { noremap = true, silent = true, desc = "Jump 5 lines up" })
+vim.keymap.set("n", "<Down>", "5jzz", { noremap = true, silent = true, desc = "Jump 5 lines down" })
+vim.keymap.set("n", "<Up>", "5kzz", { noremap = true, silent = true, desc = "Jump 5 lines up" })
+
+-- vim.keymap.set ({"i", "n", "s"}, "<C-f>", --b
