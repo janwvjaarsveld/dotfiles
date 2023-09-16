@@ -66,4 +66,5 @@ setup_tmuxinator() {
 # setup_zsh
 # setup_tmux
 # setup_tmuxinator
+chmod +x $HOME/dotfiles/scripts/*
 echo "Setting up development configuration... DONE"

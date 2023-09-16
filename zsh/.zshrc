@@ -37,7 +37,6 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-# export JAVA_HOME=$(/usr/libexec/java_home -v 11)
 export JAVA_HOME=$(/usr/libexec/java_home -v 17)
 # export JAVA_HOME=/opt/homebrew/Cellar/openjdk/20/libexec/openjdk.jdk/Contents/Home
 export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
@@ -71,13 +70,14 @@ alias TXIAGTFC="tmuxinator default ~/Development/projects/IAGL/redemption-flight
 alias IAGLOCEXTRACT="cd ~/Development/projects/IAGL/redemption-oag-data-extractor"
 alias TXIAGLOCEXTRACT="tmuxinator default ~/Development/projects/IAGL/redemption-oag-data-extractor"
 alias TXIAGFABINFRA="tmuxinator default ~/Development/projects/IAGL/redemption-availability-infrastructure"
-alias JAVA11="export JAVA_HOME=$(/usr/libexec/java_home -v 11)"
 alias JAVA17="export JAVA_HOME=$(/usr/libexec/java_home -v 17)"
 alias greset="git fetch && git reset --hard origin/\$(git rev-parse --abbrev-ref HEAD)"
 alias gst="git status"
 alias gss="git stash"
 alias gsp="git stash pop"
 alias excel="open -a /Applications/Microsoft\ Excel.app"
+alias lvim="~/.local/bin/lvim"
+alias vmrss="~/dotfiles/scripts/vmrss.sh"
 
 bindkey -v
 # npm global
@@ -96,12 +96,6 @@ if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
   export PATH=`gem environment gemdir`/bin:$PATH
 fi
 
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
