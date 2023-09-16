@@ -38,8 +38,6 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 export JAVA_HOME=$(/usr/libexec/java_home -v 17)
-# export JAVA_HOME=/opt/homebrew/Cellar/openjdk/20/libexec/openjdk.jdk/Contents/Home
-export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -57,19 +55,6 @@ alias fixlogi="sudo pkill -9 logiopt"
 alias serve="python3 -m http.server"
 
 # Example aliases
-alias IAGRPF="cd ~/Development/projects/IAGL/reward-platform"
-alias TXIAGRPF="tmuxinator default ~/Development/projects/IAGL/reward-platform"
-alias IAGFAB="cd ~/Development/projects/IAGL/redemption-flight-availability-service"
-alias TXIAGFAB="tmuxinator default ~/Development/projects/IAGL/redemption-flight-availability-service"
-alias IAGLOC="cd ~/Development/projects/IAGL/redemption-locations-service"
-alias TXIAGLOC="tmuxinator default ~/Development/projects/IAGL/redemption-locations-service"
-alias IAGLOCINFRA="cd ~/Development/projects/IAGL/redemption-locations-infrastructure"
-alias TXIAGLOCINFRA="tmuxinator default ~/Development/projects/IAGL/redemption-locations-infrastructure"
-alias IAGTFC="cd ~/Development/projects/IAGL/redemption-flight-tax-fees-charges-service"
-alias TXIAGTFC="tmuxinator default ~/Development/projects/IAGL/redemption-flight-tax-fees-charges-service"
-alias IAGLOCEXTRACT="cd ~/Development/projects/IAGL/redemption-oag-data-extractor"
-alias TXIAGLOCEXTRACT="tmuxinator default ~/Development/projects/IAGL/redemption-oag-data-extractor"
-alias TXIAGFABINFRA="tmuxinator default ~/Development/projects/IAGL/redemption-availability-infrastructure"
 alias JAVA17="export JAVA_HOME=$(/usr/libexec/java_home -v 17)"
 alias greset="git fetch && git reset --hard origin/\$(git rev-parse --abbrev-ref HEAD)"
 alias gst="git status"
@@ -78,6 +63,8 @@ alias gsp="git stash pop"
 alias excel="open -a /Applications/Microsoft\ Excel.app"
 alias lvim="~/.local/bin/lvim"
 alias vmrss="~/dotfiles/scripts/vmrss.sh"
+alias ta='tmux attach -t'
+alias tns='tmux new-session -s'
 
 bindkey -v
 # npm global
