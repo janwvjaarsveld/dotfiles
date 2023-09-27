@@ -14,3 +14,10 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
   group = vim.api.nvim_create_augroup("auto_comment", { clear = true }),
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  callback = function()
+    vim.cmd("setlocal commentstring=//%s")
+  end,
+  group = vim.api.nvim_create_augroup("auto_comment", { clear = true }),
+})

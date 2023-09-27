@@ -65,6 +65,7 @@ alias lvim="~/.local/bin/lvim"
 alias vmrss="~/dotfiles/scripts/vmrss.sh"
 alias ta='tmux attach -t'
 alias tns='tmux new-session -s'
+alias n='nvim'
 
 bindkey -v
 # npm global

@@ -14,6 +14,7 @@ vim.keymap.set("n", "<leader>qq", ":bd<CR>", { noremap = true, silent = true, de
 -- Copy to clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Copy selected text to clipboard" })
 vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Copy line to clipboard" })
+vim.keymap.set("x", "<leader>p", [["_dP]])
 
 vim.keymap.set(
   "n",
@@ -39,5 +40,3 @@ vim.keymap.set("n", '<leader>"', [["+p]], { desc = "Paste from clipboard" })
 -- Jump multiple lines up/down using arrow keys
 vim.keymap.set("n", "<Down>", "5jzz", { noremap = true, silent = true, desc = "Jump 5 lines down" })
 vim.keymap.set("n", "<Up>", "5kzz", { noremap = true, silent = true, desc = "Jump 5 lines up" })
-
--- vim.keymap.set ({"i", "n", "s"}, "<C-f>", --b
