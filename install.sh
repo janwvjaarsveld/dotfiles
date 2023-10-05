@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env sh
 
 DOTFILES_DIR=$HOME/dotfiles
 
@@ -34,13 +34,7 @@ setup_zsh() {
 
 setup_nvim() {
 	echo "Setting up nvim..."
-# brew install neovim
-# brew install python3
-# brew install nvm
-# brew install yarn
-# brew install ripgrep
-# brew install the_silver_searcher
-# brew install fd
+	brew install neovim python3 nvm yarn ripgrep the_silver_searcher fd lazydocker lazygit
 	echo "Symlinking $HOME/dotfiles/nvim to ~/.config/"
 	ln -sf $DOTFILES_DIR/nvim $HOME/.config/
 }
