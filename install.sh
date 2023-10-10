@@ -11,10 +11,15 @@ setup_homebrew() {
 	# Install Homebrew
 	sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	brew cask install iterm2
-	brew install git
-	brew install wget
-	brew install curl
-	brew install unzip
+	brew install neovim python3 nodejs nvm yarn ripgrep pyenv the_silver_searcher fd lazydocker lazygit git wget curl unzip
+}
+
+setup_fonts() {
+	wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Meslo.zip -O ~/Downloads/Meslo.zip
+	unzip ~/Downloads/Meslo.zip -d ~/Downloads/tmp
+	mv ~/Downloads/tmp/*.ttf ~/.local/share/fonts
+	rm -rf ~/Downloads/Meslo.zip ~/Downloads/tmp
+	fc-cache -fv
 }
 
 setup_zsh() {
@@ -30,11 +35,12 @@ setup_zsh() {
 	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 	git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+	# Make ZSH default shell
+	chsh -s $(which zsh)
 }
 
 setup_nvim() {
 	echo "Setting up nvim..."
-	brew install neovim python3 nvm yarn ripgrep the_silver_searcher fd lazydocker lazygit
 	echo "Symlinking $HOME/dotfiles/nvim to ~/.config/"
 	ln -sf $DOTFILES_DIR/nvim $HOME/.config/
 }
@@ -56,9 +62,12 @@ setup_tmuxinator() {
 	ln -sf $DOTFILES_DIR/tmuxinator $HOME/.config/
 }
 
- setup_nvim
-# setup_zsh
-# setup_tmux
-# setup_tmuxinator
+setup_homebrew
+setup_fonts
+setup_nvim
+setup_zsh
+setup_tmux
+setup_tmuxinator
+
 chmod +x $HOME/dotfiles/scripts/*
 echo "Setting up development configuration... DONE"
