@@ -15,7 +15,7 @@ return {
       eslint = function()
         vim.api.nvim_create_autocmd("BufWritePre", {
           callback = function(event)
-            if not require("lazyvim.plugins.lsp.format").enabled() then
+            if not require("lazyvim.util").format.enabled() then
               -- exit early if autoformat is not enabled
               return
             end
