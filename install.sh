@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 DOTFILES_DIR=$HOME/dotfiles
 
@@ -9,14 +9,24 @@ echo "Setting up development configuration..."
 setup_homebrew() {
 	echo "Setting up Homebrew..."
 	# Install Homebrew
-	sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-	brew cask install iterm2
-	brew install neovim python3 nodejs nvm yarn ripgrep pyenv the_silver_searcher fd lazydocker lazygit git wget curl unzip
+	bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	(
+		echo
+		echo 'eval "$(/opt/homebrew/bin/brew shellenv)"'
+	) >>~/.zprofile
+	eval "$(/opt/homebrew/bin/brew shellenv)"
+}
+
+install_dependencies() {
+	echo "Installing dependencies"
+	brew install --cask iterm2
+	brew install neovim python3 nodejs nvm yarn ripgrep pyenv the_silver_searcher fd lazydocker lazygit git wget curl unzip fontconfig go
 }
 
 setup_fonts() {
 	wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Meslo.zip -O ~/Downloads/Meslo.zip
 	unzip ~/Downloads/Meslo.zip -d ~/Downloads/tmp
+	mkdir -p ~/.local/share/fonts
 	mv ~/Downloads/tmp/*.ttf ~/.local/share/fonts
 	rm -rf ~/Downloads/Meslo.zip ~/Downloads/tmp
 	fc-cache -fv
@@ -26,7 +36,7 @@ setup_zsh() {
 	echo "Setting up zsh..."
 	# Install oh-my-zsh
 	brew install zsh
-	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+	bash -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 	for FILE in $(ls -A ${DOTFILES_DIR}/zsh); do
 		echo "Symlinking $HOME/dotfiles/zsh/$FILE to ~/$FILE"
 		ln -sf $DOTFILES_DIR/zsh/"$FILE" $HOME/"$FILE"
@@ -62,12 +72,89 @@ setup_tmuxinator() {
 	ln -sf $DOTFILES_DIR/tmuxinator $HOME/.config/
 }
 
-setup_homebrew
-setup_fonts
-setup_nvim
-setup_zsh
-setup_tmux
-setup_tmuxinator
+echo "Do you wish to install homebrew?"
+select yns in "Yes" "No" "Skip"; do
+	case $yns in
+	Yes)
+		setup_homebrew
+		break
+		;;
+	No) exit ;;
+	Skip) break ;;
+	esac
+done
+
+echo "Do you wish to install the dependencies?"
+select yns in "Yes" "No" "Skip"; do
+	case $yns in
+	Yes)
+		install_dependencies
+		break
+		;;
+	No) exit ;;
+	Skip) break ;;
+	esac
+done
+
+echo "Do you wish to install fonts?"
+select yns in "Yes" "No" "Skip"; do
+	case $yns in
+	Yes)
+		setup_fonts
+		break
+		;;
+	No) exit ;;
+	Skip) break ;;
+	esac
+done
+
+echo "Do you wish to install neovim?"
+select yns in "Yes" "No" "Skip"; do
+	case $yns in
+	Yes)
+		setup_nvim
+		break
+		;;
+	No) exit ;;
+	Skip) break ;;
+	esac
+done
+
+echo "Do you wish to install zsh?"
+select yns in "Yes" "No" "Skip"; do
+	case $yns in
+	Yes)
+		setup_zsh
+		break
+		;;
+	No) exit ;;
+	Skip) break ;;
+	esac
+done
+
+echo "Do you wish to install tmux?"
+select yns in "Yes" "No" "Skip"; do
+	case $yns in
+	Yes)
+		setup_tmux
+		break
+		;;
+	No) exit ;;
+	Skip) break ;;
+	esac
+done
+
+echo "Do you wish to install tmuxinator?"
+select yns in "Yes" "No" "Skip"; do
+	case $yns in
+	Yes)
+		setup_tmuxinator
+		break
+		;;
+	No) exit ;;
+	Skip) break ;;
+	esac
+done
 
 chmod +x $HOME/dotfiles/scripts/*
 echo "Setting up development configuration... DONE"
