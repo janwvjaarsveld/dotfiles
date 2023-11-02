@@ -24,11 +24,8 @@ install_dependencies() {
 }
 
 setup_fonts() {
-	wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Meslo.zip -O ~/Downloads/Meslo.zip
-	unzip ~/Downloads/Meslo.zip -d ~/Downloads/tmp
-	mkdir -p ~/.local/share/fonts
-	mv ~/Downloads/tmp/*.ttf ~/.local/share/fonts
-	rm -rf ~/Downloads/Meslo.zip ~/Downloads/tmp
+	brew tap homebrew/cask-fonts
+	brew install font-meslo-for-powerline
 	fc-cache -fv
 }
 
