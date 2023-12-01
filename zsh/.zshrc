@@ -51,6 +51,10 @@ alias vimrc='nvim ~/.vimrc'
 alias szsh="source ~/.zshrc"
 alias fixlogi="sudo pkill -9 logiopt"
 alias serve="python3 -m http.server"
+alias postnl="cd ~/dev/postnl"
+alias tsession='~/dotfiles/tmux/sessions.sh'
+alias tpos='tsession ~/dev/postnl "postnl"'
+alias tdot='tsession ~/dotfiles "dotfiles"'
 
 # Example aliases
 alias greset="git fetch && git reset --hard origin/\$(git rev-parse --abbrev-ref HEAD)"
@@ -62,6 +66,7 @@ alias lvim="~/.local/bin/lvim"
 alias vmrss="~/dotfiles/scripts/vmrss.sh"
 alias ta='tmux attach -t'
 alias tns='tmux new-session -s'
+alias tnw='tmux new-window -n'
 alias n='nvim'
 
 bindkey -v
@@ -84,3 +89,6 @@ fi
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+

@@ -10,7 +10,8 @@
 name: <%= WDIR.split('/').last  %>
 root: <%= @args[0] %>
 
+
 windows:
   - null:
       panes:
-        - editor: nvim
+        - nvim
