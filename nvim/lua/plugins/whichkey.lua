@@ -4,6 +4,7 @@ return {
   opts = {
     defaults = {
       ["<leader>t"] = { name = "+test" },
+      ["<leader>n"] = { name = "+node package info" },
     },
   },
 }
