@@ -2,6 +2,9 @@
 vim.g.material_style = "deep ocean"
 
 return {
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000, opts = {
+    transparent_background = true,
+  } },
   -- add OneDarker
   { "lunarvim/Onedarker.nvim" },
   -- add gruvbox
@@ -15,7 +18,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "material",
+      colorscheme = "catppuccin",
     },
   },
 }
