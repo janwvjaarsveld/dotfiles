@@ -20,12 +20,12 @@ setup_homebrew() {
 install_dependencies() {
 	echo "Installing dependencies"
 	brew install --cask iterm2
-	brew install neovim python3 nodejs nvm yarn ripgrep pyenv the_silver_searcher fd lazydocker lazygit git wget curl unzip fontconfig go
+	brew install neovim kitty python3 nodejs nvm yarn ripgrep pyenv the_silver_searcher fd lazydocker lazygit git wget curl unzip fontconfig go fzf
 }
 
 setup_fonts() {
 	brew tap homebrew/cask-fonts
-	brew install font-meslo-for-powerline
+	brew install font-meslo-for-powerline font-meslo-lg-nerd-font
 	fc-cache -fv
 }
 
@@ -44,6 +44,12 @@ setup_zsh() {
 	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 	# Make ZSH default shell
 	chsh -s $(which zsh)
+}
+
+setup_kitty() {
+	echo "Setting up kitty..."
+	echo "Symlinking $HOME/dotfiles/kitty to ~/.config/"
+	ln -sf $DOTFILES_DIR/kitty $HOME/.config/
 }
 
 setup_nvim() {
@@ -122,6 +128,18 @@ select yns in "Yes" "No" "Skip"; do
 	case $yns in
 	Yes)
 		setup_zsh
+		break
+		;;
+	No) exit ;;
+	Skip) break ;;
+	esac
+done
+
+echo "Do you wish to install kitty?"
+select yns in "Yes" "No" "Skip"; do
+	case $yns in
+	Yes)
+		setup_kitty
 		break
 		;;
 	No) exit ;;

@@ -51,9 +51,9 @@ alias vimrc='nvim ~/.vimrc'
 alias szsh="source ~/.zshrc"
 alias fixlogi="sudo pkill -9 logiopt"
 alias serve="python3 -m http.server"
-alias postnl="cd ~/dev/postnl"
+alias pnl="cd ~/postnl"
 alias tsession='~/dotfiles/tmux/sessions.sh'
-alias tpos='tsession ~/dev/postnl "postnl"'
+alias tpos='tsession ~/postnl "postnl"'
 alias tdot='tsession ~/dotfiles "dotfiles"'
 
 # Example aliases
