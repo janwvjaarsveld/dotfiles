@@ -6,20 +6,34 @@ DOTFILES_DIR=$HOME/dotfiles
 
 echo "Setting up development configuration..."
 
+mkdir -p ~/.config
+
 setup_homebrew() {
 	echo "Setting up Homebrew..."
 	# Install Homebrew
 	bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+	UNAME_MACHINE="$(/usr/bin/uname -m)"
+	if [[ "${UNAME_MACHINE}" == "arm64" ]]; then
+
+		# On ARM macOS, this script installs to /opt/homebrew only
+		HOMEBREW_PREFIX="/opt/homebrew"
+		HOMEBREW_REPOSITORY="${HOMEBREW_PREFIX}"
+	else
+		# On Intel macOS, this script installs to /usr/local only
+		HOMEBREW_PREFIX="/usr/local"
+		HOMEBREW_REPOSITORY="${HOMEBREW_PREFIX}/Homebrew"
+	fi
 	(
 		echo
-		echo 'eval "$(/opt/homebrew/bin/brew shellenv)"'
+		echo 'eval "$('${HOMEBREW_REPOSITORY}'/bin/brew shellenv)"'
 	) >>~/.zprofile
-	eval "$(/opt/homebrew/bin/brew shellenv)"
+	eval "$(${HOMEBREW_REPOSITORY}/bin/brew shellenv)"
 }
 
 install_dependencies() {
 	echo "Installing dependencies"
-	brew install --cask iterm2
+	# brew install --cask iterm2
 	brew install neovim kitty python3 nodejs nvm yarn ripgrep pyenv the_silver_searcher fd lazydocker lazygit git wget curl unzip fontconfig go fzf
 }
 
