@@ -33,9 +33,18 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+UNAME_MACHINE="$(/usr/bin/uname -m)"
+if [[ "${UNAME_MACHINE}" == "arm64" ]]; then
+  # On ARM macOS, this script installs to /opt/homebrew only
+  HOMEBREW_PREFIX="/opt/homebrew"
+else
+  # On Intel macOS, this script installs to /usr/local only
+  HOMEBREW_PREFIX="/usr/local"
+fi
+
 export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+  [ -s "${HOMEBREW_PREFIX}/opt/nvm/nvm.sh" ] && \. "${HOMEBREW_PREFIX}/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "${HOMEBREW_PREFIX}/opt/nvm/etc/bash_completion.d/nvm" ] && \. "${HOMEBREW_PREFIX}/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -72,8 +81,8 @@ alias n='nvim'
 bindkey -v
 # npm global
 export PATH=~/.npm-global/bin:$PATH
-export PATH="/opt/homebrew/opt/curl/bin:$PATH"
-export PATH="/opt/homebrew/opt/unzip/bin:$PATH"
+export PATH="${HOMEBREW_PREFIX}/opt/curl/bin:$PATH"
+export PATH="${HOMEBREW_PREFIX}/opt/unzip/bin:$PATH"
 
 [ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh
 
@@ -81,8 +90,8 @@ export PATH="/opt/homebrew/opt/unzip/bin:$PATH"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Set to use ruby installed from homebrew
-if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
-  export PATH=/opt/homebrew/opt/ruby/bin:$PATH
+if [ -d "${HOMEBREW_PREFIX}/opt/ruby/bin" ]; then
+  export PATH=${HOMEBREW_PREFIX}/opt/ruby/bin:$PATH
   export PATH=`gem environment gemdir`/bin:$PATH
 fi
 
