@@ -1,5 +1,6 @@
 dir=${1:-$pwd}
-session_name=${2:-"${PWD##*/}"}
+# session_name=${2:-"${PWD##*/}"}
+session_name=${2:-"default"}
 should_attach=${3:-true}
 
 # we only want to list directories
