@@ -84,6 +84,9 @@ export PATH=~/.npm-global/bin:$PATH
 export PATH="${HOMEBREW_PREFIX}/opt/curl/bin:$PATH"
 export PATH="${HOMEBREW_PREFIX}/opt/unzip/bin:$PATH"
 
+# add go to PATH
+export PATH=$PATH:~/go/bin
+
 [ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
