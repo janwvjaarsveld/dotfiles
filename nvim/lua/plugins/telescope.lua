@@ -9,6 +9,7 @@ return {
   },
   opts = {
     defaults = {
+      file_ignore_patterns = { "node_modules", "yarn.lock", "package-lock.json" },
       mappings = {
         i = {
           ["<C-j>"] = function(...)
