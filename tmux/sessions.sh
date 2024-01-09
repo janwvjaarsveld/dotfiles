@@ -15,7 +15,7 @@ function new_session() {
 }
 
 function cd_and_nvim() {
-	tmux send-keys -t $session_name:$name 'cd ' $dir/$name ENTER 'nvim' ENTER
+	tmux send-keys -t $session_name:$name 'cd ' $dir/$name ENTER 'clear && nvim' ENTER
 }
 
 function attach_session() {

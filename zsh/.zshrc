@@ -61,6 +61,7 @@ alias szsh="source ~/.zshrc"
 alias fixlogi="sudo pkill -9 logiopt"
 alias serve="python3 -m http.server"
 alias pnl="cd ~/postnl"
+alias dev="cd ~/dev"
 alias tsession='~/dotfiles/tmux/sessions.sh'
 alias tpos='tsession ~/postnl "postnl"'
 alias tdot='tsession ~/dotfiles "dotfiles"'
