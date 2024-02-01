@@ -34,7 +34,7 @@ setup_homebrew() {
 install_dependencies() {
 	echo "Installing dependencies"
 	# brew install --cask iterm2
-	brew install neovim kitty python3 nodejs nvm yarn ripgrep pyenv the_silver_searcher fd lazydocker lazygit git wget curl unzip fontconfig go fzf
+	brew install neovim kitty python3 nvm yarn ripgrep pyenv the_silver_searcher fd lazydocker lazygit git wget curl unzip fontconfig go fzf
 }
 
 setup_fonts() {

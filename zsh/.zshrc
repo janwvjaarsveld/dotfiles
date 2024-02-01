@@ -1,9 +1,9 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+## if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+##   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+## fi
 
 export ZSH="$HOME/.oh-my-zsh"
 export UPDATE_ZSH_DAYS=30
@@ -54,7 +54,7 @@ export NVM_DIR="$HOME/.nvm"
 # My useful aliases
 alias c="clear"
 alias q="exit"
-alias zsh="nvim ~/.zshrc"
+alias nzsh="nvim ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias vimrc='nvim ~/.vimrc'
 alias szsh="source ~/.zshrc"
