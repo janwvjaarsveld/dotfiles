@@ -18,6 +18,8 @@ return {
       },
     })
     -- Show dependency versions
+    vim.keymap.set({ "n" }, "<LEADER>n", "", { desc = "+node package info" })
+    -- Show dependency versions
     vim.keymap.set(
       { "n" },
       "<LEADER>ns",

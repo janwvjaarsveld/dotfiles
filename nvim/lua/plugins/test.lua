@@ -3,71 +3,35 @@ return {
     "nvim-neotest/neotest",
     dependencies = {
       "haydenmeade/neotest-jest",
-      "marilari88/neotest-vitest",
       "nvim-neotest/neotest-plenary",
       "nvim-neotest/neotest-go",
-      "nvim-neotest/neotest-vim-test",
-      "rouge8/neotest-rust",
-      "nvim-neotest/neotest-python",
     },
-    keys = {
-      {
-        "<leader>tl",
-        function()
-          require("neotest").run.run_last()
-        end,
-        desc = "Run Last Test",
-      },
-      {
-        "<leader>tL",
-        function()
-          require("neotest").run.run_last({ strategy = "dap" })
-        end,
-        desc = "Debug Last Test",
-      },
-      {
-        "<leader>tw",
-        function()
-          require("neotest").run.run({ jestCommand = "jest --watch " })
-        end,
-        desc = "Run Watch",
-      },
-    },
-    opts = function(_, opts)
-      table.insert(
-        opts.adapters,
-        require("neotest-jest")({
-          jestCommand = "npm test --",
-          jestConfigFile = "custom.jest.config.ts",
+    opts = {
+      adapters = {
+        ["neotest-jest"] = {
+          jestCommand = "npx jest --",
+          jestConfigFile = function(file)
+            if string.find(file, "/packages/") then
+              if string.find(file, "/src/") then
+                return string.match(file, "(.-/[^/]+/)src") .. "jest.config.js"
+              end
+              return string.match(file, "(.-/[^/]+/)lib") .. "jest.config.ts"
+            end
+
+            return vim.fn.getcwd() .. "/jest.config.ts"
+          end,
           env = { CI = true },
-          cwd = function()
+          cwd = function(file)
+            if string.find(file, "/packages/") then
+              if string.find(file, "/src/") then
+                return string.match(file, "(.-/[^/]+/)src")
+              end
+              return string.match(file, "(.-/[^/]+/)lib")
+            end
             return vim.fn.getcwd()
           end,
-        })
-      )
-      table.insert(opts.adapters, require("neotest-vitest"))
-      table.insert(opts.adapters, require("neotest-plenary"))
-      table.insert(opts.adapters, require("neotest-rust"))
-      table.insert(opts.adapters, require("neotest-jest"))
-      table.insert(
-        opts.adapters,
-        require("neotest-vim-test")({
-          ignore_file_types = { "python", "vim", "lua" },
-        })
-      )
-      table.insert(
-        opts.adapters,
-        require("neotest-python")({
-          dap = { justMyCode = false },
-          runner = "unittest",
-        })
-      )
-      table.insert(
-        opts.adapters,
-        require("neotest-go")({
-          args = { "-tags=integration" },
-        })
-      )
-    end,
+        },
+      },
+    },
   },
 }

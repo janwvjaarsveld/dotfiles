@@ -9,3 +9,4 @@ vim.opt.hlsearch = false -- Use highlighting when doing a search.
 vim.opt.clipboard = "" -- Do not sync with system clipboard
 vim.opt.swapfile = false -- Do not create swap files
 vim.opt.directory = os.getenv("HOME") .. "/.vim/swap//" -- Set swap files directory
+vim.opt.sessionoptions = "buffers,curdir,folds,globals,tabpages,winpos,winsize"
