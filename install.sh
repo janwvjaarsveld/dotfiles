@@ -34,7 +34,7 @@ setup_homebrew() {
 install_dependencies() {
 	echo "Installing dependencies"
 	# brew install --cask iterm2
-	brew install neovim kitty python3 nvm yarn ripgrep pyenv the_silver_searcher fd lazydocker lazygit git wget curl unzip fontconfig go fzf
+	brew install neovim python3 nvm yarn ripgrep pyenv the_silver_searcher fd lazydocker lazygit git wget curl unzip fontconfig go fzf
 }
 
 setup_fonts() {
@@ -62,8 +62,16 @@ setup_zsh() {
 
 setup_kitty() {
 	echo "Setting up kitty..."
+	brew install kitty
 	echo "Symlinking $HOME/dotfiles/kitty to ~/.config/"
 	ln -sf $DOTFILES_DIR/kitty $HOME/.config/
+}
+
+setup_wezterm() {
+	echo "Setting up wezterm..."
+	brew install --cask wezterm
+	echo "Symlinking $HOME/dotfiles/wezterm/.wezterm.lua to ~/.wezterm.lua"
+	ln -sf $DOTFILES_DIR/wezterm/.wezterm.lua $HOME/.wezterm.lua
 }
 
 setup_nvim() {
@@ -142,6 +150,18 @@ select yns in "Yes" "No" "Skip"; do
 	case $yns in
 	Yes)
 		setup_zsh
+		break
+		;;
+	No) exit ;;
+	Skip) break ;;
+	esac
+done
+
+echo "Do you wish to install wezterm?"
+select yns in "Yes" "No" "Skip"; do
+	case $yns in
+	Yes)
+		setup_wezterm
 		break
 		;;
 	No) exit ;;
