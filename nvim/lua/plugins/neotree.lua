@@ -6,6 +6,7 @@ return {
       follow_current_file = { enabled = true },
     },
     filesystem = {
+      bind_to_cwd = true,
       follow_current_file = { enabled = true },
       filtered_items = {
         hide_dotfiles = false,
