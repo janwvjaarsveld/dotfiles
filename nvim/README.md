@@ -74,7 +74,6 @@
 - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
 - [todo-comments.nvim](https://github.com/folke/todo-comments.nvim)
 - [tokyonight.nvim](https://github.com/folke/tokyonight.nvim)
-- [treesj](https://github.com/Wansmer/treesj)
 - [trouble.nvim](https://github.com/folke/trouble.nvim)
 - [twilight.nvim](https://github.com/folke/twilight.nvim)
 - [typescript.nvim](https://github.com/jose-elias-alvarez/typescript.nvim)

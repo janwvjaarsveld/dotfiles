@@ -38,3 +38,5 @@ vim.opt.swapfile = false -- Do not create swap files
 vim.opt.directory = os.getenv("HOME") .. "/.vim/swap//" -- Set swap files directory
 vim.opt.sessionoptions = "buffers,curdir,folds,globals,tabpages,winpos,winsize"
 vim.opt.foldmethod = "manual"
+
+vim.g.root_spec = { ".git", "lsp" }
