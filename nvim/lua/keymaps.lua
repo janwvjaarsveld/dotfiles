@@ -1,8 +1,4 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
-
--- exit insert mode with jk
+--exit insert mode with jk
 vim.keymap.set("i", "jk", "<ESC>", { noremap = true, silent = true, desc = "<ESC>" })
 
 -- exit vim
@@ -10,6 +6,15 @@ vim.keymap.set("n", "<leader>q!", ":q<CR>", { noremap = true, silent = true, des
 
 -- close current buffer
 vim.keymap.set("n", "<leader>qq", ":bd<CR>", { noremap = true, silent = true, desc = "Close current buffer" })
+
+-- source current file
+vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>")
+vim.keymap.set("n", "<space>x", ":.lua<CR>")
+-- -- source highlighted text
+vim.keymap.set("v", "<space>x", ":lua<CR>")
+
+vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>")
+vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>")
 
 -- Copy to clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Copy selected text to clipboard" })
