@@ -6,14 +6,11 @@ map("i", "jk", "<ESC>", { noremap = true, silent = true, desc = "<ESC>" })
 -- exit vim
 map("n", "<leader>q!", ":q<CR>", { noremap = true, silent = true, desc = "Quit" })
 
--- close current buffer
-map("n", "<leader>qq", ":bd<CR>", { noremap = true, silent = true, desc = "Close current buffer" })
-
 -- source current file
-map("n", "<space>xx", "<cmd>source %<CR>")
-map("n", "<space>x", ":.lua<CR>")
+map("n", "<leader>xs", "<cmd>source %<CR>", { desc = "Source current file" })
+map("n", "<leader>xe", ":.lua<CR>", { desc = "Execute the current file" })
 -- -- source highlighted text
-map("v", "<space>x", ":lua<CR>")
+map("v", "<space>x", ":lua<CR>", { desc = "Source highlighted text" })
 
 map("n", "<M-j>", "<cmd>cnext<CR>")
 map("n", "<M-k>", "<cmd>cprev<CR>")
@@ -71,3 +68,29 @@ map("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 -- quickfix
 map("n", "<M-j>", "<cmd>cnext<CR>", { desc = "Next quickfix item" })
 map("n", "<M-k>", "<cmd>cprev<CR>", { desc = "Previous quickfix item" })
+
+-- There are builtin keymaps for this now, but I like that it shows
+-- the float when I navigate to the error - so I override them.
+-- map("n", "]d", fn(vim.diagnostic.jump, { count = 1, float = true }))
+-- map("n", "[d", fn(vim.diagnostic.jump, { count = -1, float = true }))
+
+-- These mappings control the size of splits (height/width)
+map("n", "<M-,>", "<c-w>5<")
+map("n", "<M-.>", "<c-w>5>")
+map("n", "<M-t>", "<C-W>+")
+map("n", "<M-s>", "<C-W>-")
+
+-- Terminal Mappings
+function _G.set_terminal_keymaps()
+  local opts = { buffer = 0 }
+  vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
+  vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
+  vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], opts)
+  vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], opts)
+  vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
+  vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
+  vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], opts)
+end
+
+-- if you only want these mappings for toggle term use term://*toggleterm#* instead
+vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")

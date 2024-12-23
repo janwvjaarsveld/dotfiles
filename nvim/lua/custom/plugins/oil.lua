@@ -11,10 +11,12 @@ return {
       require("oil").setup({
         keymaps = {
           ["q"] = { "actions.close", mode = "n" },
+          ["<Bs>"] = { "actions.parent", mode = "n" },
+          ["-"] = false,
         },
       })
 
-      vim.keymap.set("n", "-", "<cmd>Oil<CR>")
+      vim.keymap.set("n", "-", require("oil").toggle_float)
     end,
   },
 }
