@@ -140,5 +140,7 @@ if [ -d "${HOMEBREW_PREFIX}/opt/ruby/bin" ]; then
 fi
 
 export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
+export ANTHROPIC_API_KEY=$(<~/.api-keys/anthropic.txt)
+export OPENAI_API_KEY=$(<~/.api-keys/openai.txt)
 # asdf sourcing
 . /opt/homebrew/opt/asdf/libexec/asdf.sh

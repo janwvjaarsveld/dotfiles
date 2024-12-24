@@ -1,0 +1,212 @@
+-- local state = {
+--   floating = {
+--     buf = -1,
+--     win = -1,
+--   },
+-- }
+--
+-- local function create_floating_window(opts)
+--   opts = opts or {}
+--   local width = opts.width or math.floor(vim.o.columns * 0.8)
+--   local height = opts.height or math.floor(vim.o.lines * 0.8)
+--
+--   -- Calculate the position to center the window
+--   local col = math.floor((vim.o.columns - width) / 2)
+--   local row = math.floor((vim.o.lines - height) / 2)
+--
+--   -- Create a buffer
+--   local buf = nil
+--   if vim.api.nvim_buf_is_valid(opts.buf) then
+--     buf = opts.buf
+--   else
+--     buf = vim.api.nvim_create_buf(false, true) -- No file, scratch buffer
+--   end
+--
+--   -- Define window configuration
+--   local win_config = {
+--     relative = "editor",
+--     width = width,
+--     height = height,
+--     col = col,
+--     row = row,
+--     style = "minimal", -- No borders or extra UI elements
+--     border = "rounded",
+--     title = opts.title or "",
+--     title_pos = "center", -- Center the title
+--   }
+--
+--   -- Create the floating window
+--   local win = vim.api.nvim_open_win(buf, true, win_config)
+--
+--   return { buf = buf, win = win }
+-- end
+--
+-- -- Function to get the text between quotes where the cursor is currently located
+-- local function get_text_between_quotes()
+--   -- Get the current cursor position
+--   local cursor = vim.api.nvim_win_get_cursor(0)
+--   local line_num = cursor[1]
+--   local col_num = cursor[2] + 1 -- Lua indices start at 1
+--
+--   -- Get the current line text
+--   local line = vim.api.nvim_get_current_line()
+--
+--   -- Define the quote characters to look for
+--   local quotes = { '"', "'" }
+--
+--   -- Iterate through each type of quote
+--   for _, quote in ipairs(quotes) do
+--     -- Find the position of the last quote before the cursor
+--     local start_pos = line:sub(1, col_num):reverse():find(quote)
+--     if start_pos then
+--       start_pos = col_num - start_pos + 1
+--       -- Find the position of the next quote after the cursor
+--       local end_pos = line:sub(col_num):find(quote)
+--       if end_pos then
+--         -- Extract the text between the quotes
+--         local text = line:sub(start_pos + 1, col_num - 1 + end_pos - 1)
+--         return text
+--       end
+--     end
+--   end
+--
+--   -- If no quotes are found around the cursor
+--   return nil
+-- end
+--
+-- local function retrieve_package_readme(url)
+--   -- Helper function to extract owner, repo, branch, and path from the raw URL
+--   local function parse_raw_url(raw_url)
+--     -- Example raw URL:
+--     -- https://raw.githubusercontent.com/username/repository/branch/path/to/file.md
+--     local pattern = "^https://raw%.githubusercontent%.com/([^/]+)/([^/]+)/([^/]+)/(.+)$"
+--     local owner, repo, branch, path = raw_url:match(pattern)
+--     return owner, repo, branch, path
+--   end
+--
+--   -- Helper function to construct raw URL with a different branch
+--   local function construct_raw_url(owner, repo, branch, path)
+--     return string.format("https://raw.githubusercontent.com/%s/%s/%s/%s", owner, repo, branch, path)
+--   end
+--
+--   -- Helper function to check if a URL exists by fetching headers
+--   local function url_exists(raw_url)
+--     -- Use curl to fetch headers only
+--     local headers = vim.fn.system({ "curl", "-Is", raw_url })
+--     -- Check the HTTP status code
+--     local status_code = headers:match("HTTP/%d (%d%d%d)") or "0"
+--     return tonumber(status_code) and tonumber(status_code) == 200
+--   end
+--
+--   -- Parse the initial URL
+--   local owner, repo, branch, path = parse_raw_url(url)
+--   if not owner then
+--     print("Invalid GitHub raw URL format. Please provide a valid raw URL.")
+--     return
+--   end
+--
+--   -- List of possible branches to try
+--   local branches_to_try = { branch, "main", "master" }
+--
+--   local successful = false
+--   local final_url = ""
+--
+--   for _, b in ipairs(branches_to_try) do
+--     local test_url = construct_raw_url(owner, repo, b, path)
+--     if url_exists(test_url) then
+--       final_url = test_url
+--       successful = true
+--       break
+--     end
+--   end
+--
+--   if not successful then
+--     print("Failed to fetch the Markdown file. Please check the URL and branch names.")
+--     return
+--   end
+--
+--   -- Now, fetch the content using the successful URL
+--   local result = vim.fn.system({ "curl", "-s", final_url })
+--
+--   -- Check if the curl command was successful
+--   if vim.v.shell_error ~= 0 then
+--     print("Error fetching the Markdown file. Please check the URL.")
+--     return
+--   end
+--
+--   return result
+-- end
+--
+-- -- Function to fetch a Markdown file from a URL and render it in a new buffer
+-- local function fetch_markdown(package_name)
+--   if not package_name or package_name == "" then
+--     print("Usage: :FetchMarkdown <username/repository>")
+--     return
+--   end
+--
+--   local git_link = "https://github.com/" .. package_name
+--   local git_url = "https://raw.githubusercontent.com/" .. package_name .. "/main/README.md"
+--   -- Use curl to download the markdown content
+--   local result = retrieve_package_readme(git_url)
+--
+--   -- Check if the curl command was successful
+--   if vim.v.shell_error ~= 0 then
+--     print("Error fetching the Markdown file. Please check the URL.")
+--     return
+--   end
+--
+--   -- Create a new split window and buffer
+--   state.floating = create_floating_window({ buf = state.floating.buf, title = package_name })
+--
+--   -- Set buffer options
+--   vim.bo[state.floating.buf].filetype = "markdown" -- Enable Markdown syntax highlighting
+--   vim.bo[state.floating.buf].bufhidden = "wipe"    -- Automatically delete the buffer when no longer displayed
+--   vim.bo[state.floating.buf].buftype = ""          -- Make it a normal buffer
+--   vim.wo[state.floating.win].wrap = true           -- Set wrap for the window
+--
+--   -- Clear the buffer before inserting new content
+--   vim.api.nvim_buf_set_lines(state.floating.buf, 0, -1, false, {})
+--
+--   -- Split the result into lines
+--   local lines = vim.split(result, "\n")
+--
+--   -- Insert the fetched content into the buffer
+--   vim.api.nvim_buf_set_lines(state.floating.buf, 0, -1, false, lines)
+--
+--   vim.api.nvim_buf_set_keymap(state.floating.buf, "n", "q", "<cmd>bd!<CR>", { noremap = true, silent = true })
+--
+--   -- Map 'o' to open the git url
+--   vim.api.nvim_buf_set_keymap(
+--     state.floating.buf,
+--     "n",
+--     "o",
+--     string.format([[<cmd>lua vim.ui.open("%s")<CR>]], git_link),
+--     { noremap = true, silent = true }
+--   )
+--
+--   -- Optionally, add an autocmd to clean up when the buffer is unloaded
+--   vim.api.nvim_create_autocmd("BufWipeout", {
+--     buffer = state.floating.buf,
+--     callback = function()
+--       state.floating = { buf = -1, win = -1 }
+--     end,
+--   })
+-- end
+--
+-- -- Create a user command to call the function
+-- -- Create a user command to call the function with an argument
+-- vim.api.nvim_create_user_command("FetchMarkdown", function(opts)
+--   if opts.args and opts.args ~= "" then
+--     fetch_markdown(opts.args)
+--     return
+--   end
+--   fetch_markdown(get_text_between_quotes())
+-- end, {
+--   nargs = "?",       -- Expect exactly one argument
+--   complete = "file", -- Optionally, provide completion
+--   desc =
+--   "Fetch and display the README.md of a GitHub repository in a floating window. Usage: :FetchMarkdown <username/repository>",
+-- })
+--
+-- -- Bind the FetchMarkdown command to <leader>fm
+-- vim.keymap.set("n", "<leader>fm", "<cmd>FetchMarkdown<CR>", {})
