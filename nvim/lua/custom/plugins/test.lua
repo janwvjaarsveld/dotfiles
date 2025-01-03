@@ -8,8 +8,19 @@ return {
       "nvim-neotest/nvim-nio",
     },
     opts = {
+      discovery = {
+        enabled = false,
+      },
       adapters = {
         ["neotest-jest"] = {
+          strategy_config = function(default_strategy, _)
+            default_strategy["resolveSourceMapLocations"] = {
+              "${workspaceFolder}/**",
+              "!**/node_modules/**",
+            }
+            return default_strategy
+          end,
+          jest_test_discovery = false,
           jestCommand = "npx jest --",
           jestConfigFile = function(file)
             if string.find(file, "/packages/") then
@@ -31,6 +42,7 @@ return {
             end
             return vim.fn.getcwd()
           end,
+          dapH,
         },
       },
     },
@@ -174,14 +186,6 @@ return {
         end,
         desc = "Toggle Watch (Neotest)",
       },
-    },
-  },
-  {
-    "mfussenegger/nvim-dap",
-    optional = true,
-    -- stylua: ignore
-    keys = {
-      { "<leader>td", function() require("neotest").run.run({strategy = "dap"}) end, desc = "Debug Nearest" },
     },
   },
 }

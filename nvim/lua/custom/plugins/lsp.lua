@@ -28,7 +28,34 @@ return {
       -- Schema information
       "b0o/SchemaStore.nvim",
     },
-    config = function()
+    opts = {
+      ---@type vim.diagnostic.Opts
+      diagnostics = {
+        underline = true,
+        update_in_insert = false,
+        virtual_text = {
+          spacing = 4,
+          source = "if_many",
+          prefix = "●",
+          -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
+          -- this only works on a recent 0.10.0 build. Will be set to "●" when not supported
+          -- prefix = "icons",
+        },
+        float = {
+          source = true,
+        },
+        severity_sort = true,
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = Global.icons.diagnostics.Error,
+            [vim.diagnostic.severity.WARN] = Global.icons.diagnostics.Warn,
+            [vim.diagnostic.severity.HINT] = Global.icons.diagnostics.Hint,
+            [vim.diagnostic.severity.INFO] = Global.icons.diagnostics.Info,
+          },
+        },
+      },
+    },
+    config = function(_, opts)
       local capabilities = nil
       if pcall(require, "cmp_nvim_lsp") then
         capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -38,6 +65,8 @@ return {
 
       local servers = {
         bashls = true,
+        -- Enabled biome formatting, turn off all the other ones generally
+        biome = true,
         gopls = {
           settings = {
             gopls = {
@@ -53,25 +82,6 @@ return {
             },
           },
         },
-        lua_ls = {
-          server_capabilities = {
-            semanticTokensProvider = vim.NIL,
-          },
-        },
-        svelte = true,
-
-        pyright = true,
-
-        -- Enabled biome formatting, turn off all the other ones generally
-        biome = true,
-        ts_ls = {
-          root_dir = require("lspconfig").util.root_pattern("package.json"),
-          single_file = false,
-          server_capabilities = {
-            documentFormattingProvider = false,
-          },
-        },
-        -- denols = true,
         jsonls = {
           server_capabilities = {
             documentFormattingProvider = false,
@@ -83,7 +93,20 @@ return {
             },
           },
         },
-
+        lua_ls = {
+          server_capabilities = {
+            semanticTokensProvider = vim.NIL,
+          },
+        },
+        pyright = true,
+        svelte = true,
+        vtsls = {
+          root_dir = require("lspconfig").util.root_pattern("package.json"),
+          single_file = false,
+          server_capabilities = {
+            documentFormattingProvider = false,
+          },
+        },
         yamlls = {
           settings = {
             yaml = {
@@ -97,6 +120,48 @@ return {
         },
       }
 
+      -- Set the floating window background for hover and signature help
+      vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]])
+      vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
+
+      -- LSP settings (for overriding per client)
+      local handlers = {
+        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = Global.border }),
+        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = Global.border }),
+      }
+
+      -- Completion kind
+      local kinds = vim.lsp.protocol.CompletionItemKind
+      for i, kind in ipairs(kinds) do
+        kinds[i] = Global.icons.kinds[kind] or kind
+      end
+
+      -- Diagnostic settings
+      -- diagnostics signs
+      if vim.fn.has("nvim-0.10.0") == 0 then
+        if type(opts.diagnostics.signs) ~= "boolean" then
+          for severity, icon in pairs(opts.diagnostics.signs.text) do
+            local name = vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
+            name = "DiagnosticSign" .. name
+            vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+          end
+        end
+      end
+
+      if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
+        opts.diagnostics.virtual_text.prefix = vim.fn.has("nvim-0.10.0") == 0 and "●"
+          or function(diagnostic)
+            local icons = Global.icons.diagnostics
+            for d, icon in pairs(icons) do
+              if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
+                return icon
+              end
+            end
+          end
+      end
+
+      vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
+
       local servers_to_install = vim.tbl_filter(function(key)
         local t = servers[key]
         if type(t) == "table" then
@@ -107,12 +172,7 @@ return {
       end, vim.tbl_keys(servers))
 
       require("mason").setup()
-      local ensure_installed = {
-        "stylua",
-        "lua_ls",
-        "delve",
-        -- "tailwind-language-server",
-      }
+      local ensure_installed = Global.mason.ensure_installed or {}
 
       vim.list_extend(ensure_installed, servers_to_install)
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
@@ -123,6 +183,7 @@ return {
         end
         config = vim.tbl_deep_extend("force", {}, {
           capabilities = capabilities,
+          handlers = handlers,
         }, config)
 
         lspconfig[name].setup(config)
