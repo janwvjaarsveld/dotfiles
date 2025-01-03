@@ -102,12 +102,24 @@ M.mason = {
   ensure_installed = {
     "delve",
     "eslint_d",
+    "gopls",
     "lua_ls",
     "prettier",
     "js-debug-adapter",
     "stylua",
     "vtsls",
   },
+}
+
+M.border = {
+  { "🭽", "FloatBorder" },
+  { "▔", "FloatBorder" },
+  { "🭾", "FloatBorder" },
+  { "▕", "FloatBorder" },
+  { "🭿", "FloatBorder" },
+  { "▁", "FloatBorder" },
+  { "🭼", "FloatBorder" },
+  { "▏", "FloatBorder" },
 }
 
 return M

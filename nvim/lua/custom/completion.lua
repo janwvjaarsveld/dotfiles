@@ -13,7 +13,8 @@ lspkind.init({
 vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 
 local kind_formatter = lspkind.cmp_format({
-  mode = "symbol_text",
+  -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
+  mode = "text_symbol",
   menu = {
     buffer = "[buf]",
     nvim_lsp = "[LSP]",
@@ -33,18 +34,20 @@ require("tailwindcss-colorizer-cmp").setup({
 
 local cmp = require("cmp")
 
-cmp.setup({
-  sources = {
-    {
-      name = "lazydev",
-      -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
-      group_index = 0,
-    },
-    { name = "copilot" },
-    { name = "nvim_lsp" },
-    { name = "path" },
-    { name = "buffer" },
+local cmp_sources = {
+  {
+    name = "lazydev",
+    -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
+    group_index = 0,
   },
+  { name = "copilot" },
+  { name = "nvim_lsp" },
+  { name = "path" },
+  { name = "buffer" },
+}
+
+cmp.setup({
+  sources = cmp_sources,
   mapping = {
     ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
     ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
@@ -53,11 +56,7 @@ cmp.setup({
     ["<Tab>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
     ["<S-Tab>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
     ["<C-Space>"] = function()
-      if cmp.visible() then
-        cmp.close()
-      else
-        cmp.mapping.complete()
-      end
+      cmp.mapping.complete()
     end,
     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -80,6 +79,22 @@ cmp.setup({
 
       -- Tailwind colorizer setup
       vim_item = require("tailwindcss-colorizer-cmp").formatter(entry, vim_item)
+
+      local icons = Global.icons.kinds
+      if icons[vim_item] then
+        vim_item.kind = icons[vim_item.kind] or vim_item.kind
+      end
+
+      local widths = {
+        abbr = vim.g.cmp_widths and vim.g.cmp_widths.abbr or 40,
+        menu = vim.g.cmp_widths and vim.g.cmp_widths.menu or 30,
+      }
+
+      for key, width in pairs(widths) do
+        if vim_item[key] and vim.fn.strdisplaywidth(vim_item[key]) > width then
+          vim_item[key] = vim.fn.strcharpart(vim_item[key], 0, width - 1) .. "…"
+        end
+      end
 
       return vim_item
     end,
