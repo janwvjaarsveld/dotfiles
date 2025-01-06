@@ -144,3 +144,6 @@ export ANTHROPIC_API_KEY=$(<~/.api-keys/anthropic.txt)
 export OPENAI_API_KEY=$(<~/.api-keys/openai.txt)
 # asdf sourcing
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+# this is needed for kitty to enable jumping to words with option + arrow keys
+export WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
