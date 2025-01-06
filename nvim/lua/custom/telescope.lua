@@ -54,3 +54,5 @@ vim.keymap.set("n", "<leader>fp", function()
 end, { desc = "Find in plugin files" })
 
 vim.keymap.set("n", "<space>sg", require("custom.telescope.multigrep"), { desc = "Multigrep search in files" })
+vim.keymap.set("n", "<leader>fR", builtin.resume, { desc = "Resume search" })
+vim.keymap.set("n", "<leader>sR", builtin.resume, { desc = "Resume search" })
