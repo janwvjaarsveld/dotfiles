@@ -124,10 +124,13 @@ return {
       vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]])
       vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
 
+      local _, cmp = pcall(require, "cmp")
+      local cmp_border = cmp.config.window.bordered().border
+
       -- LSP settings (for overriding per client)
       local handlers = {
-        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = Global.border }),
-        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = Global.border }),
+        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = cmp_border }),
+        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = cmp_border }),
       }
 
       -- Completion kind

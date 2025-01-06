@@ -2,14 +2,33 @@ return {
   {
     "nvim-neotest/neotest",
     dependencies = {
-      "haydenmeade/neotest-jest",
+      "nvim-neotest/neotest-jest",
       "nvim-neotest/neotest-plenary",
       "nvim-neotest/neotest-go",
       "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
     },
     opts = {
       discovery = {
-        enabled = false,
+        enabled = true,
+        filter_dir = function(name, _, _)
+          return name ~= "dist"
+        end,
+      },
+      quickfix = {
+        enabled = true,
+        open = true,
+      },
+      output_panel = {
+        enabled = true,
+        -- open = "rightbelow vsplit | resize 30",
+      },
+      status = {
+        enabled = true,
+        virtual_text = true,
+        signs = true,
       },
       adapters = {
         ["neotest-jest"] = {
@@ -20,8 +39,13 @@ return {
             }
             return default_strategy
           end,
-          jest_test_discovery = false,
-          jestCommand = "npx jest --",
+          jest_test_discovery = true,
+          jestCommand = function(file)
+            -- if string.find(file, "/packages/") then
+            --   return "npx nx test:unit "
+            -- end
+            return "npx jest "
+          end,
           jestConfigFile = function(file)
             if string.find(file, "/packages/") then
               if string.find(file, "/src/") then
@@ -43,6 +67,9 @@ return {
             return vim.fn.getcwd()
           end,
           dapH,
+        },
+        ["neotest-go"] = {
+          recursive_run = true,
         },
       },
     },
@@ -85,8 +112,8 @@ return {
                 end
               end
             end)
-            return {}
           end
+          return {}
         end
       end
 
@@ -185,6 +212,20 @@ return {
           require("neotest").watch.toggle(vim.fn.expand("%"))
         end,
         desc = "Toggle Watch (Neotest)",
+      },
+      {
+        "<leader>t[",
+        function()
+          require("neotest").jump.prev({ status = "failed" })
+        end,
+        desc = "Jump to previous failed test (Neotest)",
+      },
+      {
+        "<leader>t]",
+        function()
+          require("neotest").jump.next({ status = "failed" })
+        end,
+        desc = "Jump to next failed test (Neotest)",
       },
     },
   },

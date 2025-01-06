@@ -1,6 +1,5 @@
 require("custom.snippets")
 
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.shortmess:append("c")
 
 local lspkind = require("lspkind")
@@ -122,9 +121,11 @@ cmp.setup({
     -- TODO: I don't like this at all for completion window, it takes up way too much space.
     --  However, I think the docs one could be OK, but I need to fix the highlights for it
     --
-    -- completion = cmp.config.window.bordered(),
-    -- documentation = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered(),
   },
+  completion = { completeopt = "menu,menuone,noselect" },
+  preselect = cmp.PreselectMode.None,
 })
 
 -- Setup up vim-dadbod

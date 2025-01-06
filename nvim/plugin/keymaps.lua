@@ -4,7 +4,8 @@ local map = vim.keymap.set
 map("i", "jk", "<ESC>", { noremap = true, silent = true, desc = "<ESC>" })
 
 -- exit vim
-map("n", "<leader>q!", ":q<CR>", { noremap = true, silent = true, desc = "Quit" })
+map("n", "<leader>q!", ":on | q<CR>", { noremap = true, silent = true, desc = "Quit" })
+map("n", "<leader>qq", ":bd<CR>", { noremap = true, silent = true, desc = "Close buffer" })
 
 -- source current file
 map("n", "<leader>xs", "<cmd>source %<CR>", { desc = "Source current file" })

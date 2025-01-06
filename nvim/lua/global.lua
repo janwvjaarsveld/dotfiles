@@ -79,6 +79,7 @@ M.treesitter = {
     "jsdoc",
     "json",
     "jsonc",
+    "go",
     "lua",
     "luadoc",
     "luap",
@@ -109,17 +110,6 @@ M.mason = {
     "stylua",
     "vtsls",
   },
-}
-
-M.border = {
-  { "🭽", "FloatBorder" },
-  { "▔", "FloatBorder" },
-  { "🭾", "FloatBorder" },
-  { "▕", "FloatBorder" },
-  { "🭿", "FloatBorder" },
-  { "▁", "FloatBorder" },
-  { "🭼", "FloatBorder" },
-  { "▏", "FloatBorder" },
 }
 
 return M
