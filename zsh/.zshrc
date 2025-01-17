@@ -21,6 +21,8 @@ then
    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
+plugins=(colorize)
+
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
@@ -89,8 +91,8 @@ alias tpos='tsession ~/postnl "postnl"'
 alias tdev='tsession ~/dev "dev"'
 alias tdot='tsession ~ "dev" true "dotfiles"'
 alias dotfiles='tsession ~ "dev" true "dotfiles"'
-alias python='python3'
-alias pip='pip3'
+# alias python='python3'
+# alias pip='pip3'
 
 # Example aliases
 alias greset="git fetch && git reset --hard origin/\$(git rev-parse --abbrev-ref HEAD)"
@@ -147,3 +149,7 @@ export OPENAI_API_KEY=$(<~/.api-keys/openai.txt)
 
 # this is needed for kitty to enable jumping to words with option + arrow keys
 export WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"

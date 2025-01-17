@@ -79,10 +79,11 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   end,
 })
 
--- -- Show line diagnostics in hover window
--- vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
---   group = vim.api.nvim_create_augroup("float_diagnostic_cursor", { clear = true }),
---   callback = function()
---     vim.diagnostic.open_float(nil, { focus = false, scope = "cursor", border = Global.border })
---   end,
--- })
+-- Show line diagnostics in hover window
+vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+  group = vim.api.nvim_create_augroup("float_diagnostic_cursor", { clear = true }),
+  callback = function()
+    local _, cmp = pcall(require, "cmp")
+    vim.diagnostic.open_float(nil, { focus = false, scope = "cursor", border = Global.border })
+  end,
+})

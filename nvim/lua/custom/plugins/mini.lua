@@ -10,6 +10,14 @@ return {
       -- tabline
       require("mini.tabline").setup({ use_icons = true })
 
+      require("mini.ai").setup()
+      -- require("mini.animate").setup()
+      require("mini.bracketed").setup()
+      require("mini.jump2d").setup()
+      require("mini.surround").setup()
+
+      vim.keymap.set("n", "f", "<cmd>lua MiniJump2d.start()<CR>", { noremap = true, silent = true })
+
       -- notify
       -- local notify = require("mini.notify")
       -- notify.setup()

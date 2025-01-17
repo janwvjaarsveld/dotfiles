@@ -19,22 +19,29 @@ return {
   opts = {
     -- Define your formatters
     formatters_by_ft = {
+      go = { "gopls", "goimports", "gofumpt", lsp_format = "fallback" },
       lua = { "stylua" },
-      python = { "isort", "black" },
-      markdown = { "prettierd", "prettier", "markdownlint", stop_after_first = true },
-      javascript = { "prettierd", "prettier", stop_after_first = true },
-    },
-    -- Set default options
-    default_format_opts = {
-      lsp_format = "fallback",
+      python = { "ruff", "black", stop_after_first = true },
+      markdown = { "prettier", "markdownlint", stop_after_first = true },
+      javascript = { "prettier", lsp_format = "fallback", stop_after_first = true },
+      typescript = { "prettier", lsp_format = "fallback", stop_after_first = true },
+      _ = { "prettierd" },
     },
     -- Set up format-on-save
-    format_on_save = { timeout_ms = 500 },
+    format_on_save = { timeout_ms = 1500 },
+
+    -- Conform will notify you when no formatters are available for the buffer
+    notify_no_formatters = true,
     -- Customize formatters
     formatters = {
       shfmt = {
         prepend_args = { "-i", "2" },
       },
+      -- dprint = {
+      --   condition = function(_, ctx)
+      --     return vim.fs.find({ "dprint.json" }, { path = ctx.filename, upward = true })[1]
+      --   end,
+      -- },
     },
   },
   init = function()

@@ -5,7 +5,7 @@ return {
   ---@type snacks.Config
   opts = {
     bigfile = { enabled = true },
-    dashboard = { enabled = true },
+    dashboard = { example = "github" },
     indent = { enabled = true },
     input = { enabled = true },
     notifier = {
@@ -16,9 +16,30 @@ return {
     scroll = { enabled = true },
     statuscolumn = { enabled = true },
     words = { enabled = true },
+    ---@type table<string, snacks.win.Config>
     styles = {
       notification = {
         -- wo = { wrap = true } -- Wrap notifications
+      },
+      lazygit = {
+        bo = {
+          filetype = "lazygit",
+        },
+        wo = {},
+        keys = {
+          q = "hide",
+          gf = function(self)
+            local f = vim.fn.findfile(vim.fn.expand("<cfile>"), "**")
+            if f == "" then
+              Snacks.notify.warn("No file under cursor")
+            else
+              self:hide()
+              vim.schedule(function()
+                vim.cmd("e " .. f)
+              end)
+            end
+          end,
+        },
       },
     },
   },

@@ -17,6 +17,9 @@ require("telescope").setup({
     find_files = {
       theme = "ivy",
     },
+    git_files = {
+      theme = "ivy",
+    },
   },
   extensions = {
     wrap_results = true,
@@ -34,16 +37,19 @@ require("telescope").setup({
 pcall(require("telescope").load_extension, "fzf")
 pcall(require("telescope").load_extension, "smart_history")
 pcall(require("telescope").load_extension, "ui-select")
+pcall(require("telescope").load_extension, "neocraft_plugins")
+pcall(require("telescope").load_extension, "neocraft_tags")
 
 local builtin = require("telescope.builtin")
 
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Find in help files" })
 vim.keymap.set("n", "<leader>fd", builtin.find_files, { desc = "Find in files" })
-vim.keymap.set("n", "<leader><space>", builtin.find_files, { desc = "Find in files" })
+vim.keymap.set("n", "<leader>fg", builtin.git_files, { desc = "Find in git files" })
+vim.keymap.set("n", "<leader><space>", builtin.git_files, { desc = "Find in files" })
 vim.keymap.set("n", "<space>fb", builtin.buffers, { desc = "Find in buffers" })
 vim.keymap.set("n", "<space>/", builtin.current_buffer_fuzzy_find, { desc = "Find in current buffer" })
 vim.keymap.set("n", "<leader>fc", function()
-  builtin.find_files({
+  builtin.git_files({
     cwd = vim.fn.stdpath("config"),
   })
 end, { desc = "Find in config files" })

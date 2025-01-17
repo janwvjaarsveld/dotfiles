@@ -1,0 +1,16 @@
+font-family="MesloLGL Nerd Font"
+font-size=16
+
+## jump to end of line:
+keybind = all:super+right=text:\x05
+## jump to start of line:
+keybind = all:super+left=text:\x01
+## jump right to end of word:
+keybind = all:alt+right=text:\x1b\x66
+## jump left to beginning of word:
+keybind = all:alt+left=text:\x1b\x62
+## delete line from cursor position to start of line:
+keybind = all:super+backspace=text:\x15
+## delete word works by default via opt+backspace
+## undo (doesn't work in zsh, works in nushell with ctrl-z and ⌘-z in both):
+keybind = all:super+z=text:\x1A

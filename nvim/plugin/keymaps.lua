@@ -23,12 +23,12 @@ map("x", "<leader>p", [["_dP]])
 
 map(
   "n",
-  "<leader>r",
+  "<leader>R",
   [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
   { desc = "Search and replace word under cursor" }
 )
 
-map("v", "<leader>r", [[y:%s/<C-r>0/<C-r>0/gI<Left><Left><Left>]], { desc = "Search and replace selected text" })
+map("v", "<leader>R", [[y:%s/<C-r>0/<C-r>0/gI<Left><Left><Left>]], { desc = "Search and replace selected text" })
 
 -- Move selected line / block of text in visual mode
 map("v", "<C-j>", ":m '>+1<CR>gv=gv")
@@ -38,8 +38,8 @@ map("v", "<C-k>", ":m '<-2<CR>gv=gv")
 map("n", '<leader>"', [["+p]], { desc = "Paste from clipboard" })
 
 -- lines up/down and keep the cursor in the same position
-map("n", "<C-j>", "jzz", { noremap = true, silent = true, desc = "Lines down" })
-map("n", "<C-k>", "kzz", { noremap = true, silent = true, desc = "Lines up" })
+-- map("n", "<C-j>", "jzz", { noremap = true, silent = true, desc = "Lines down" })
+-- map("n", "<C-k>", "kzz", { noremap = true, silent = true, desc = "Lines up" })
 -- Jump multiple lines up/down using arrow keys
 map("n", "<Down>", "5jzz", { noremap = true, silent = true, desc = "Jump 5 lines down" })
 map("n", "<Up>", "5kzz", { noremap = true, silent = true, desc = "Jump 5 lines up" })
@@ -84,17 +84,20 @@ map("n", "<M-.>", "<c-w>5>")
 map("n", "<M-t>", "<C-W>+")
 map("n", "<M-s>", "<C-W>-")
 
--- Terminal Mappings
-function _G.set_terminal_keymaps()
-  local opts = { buffer = 0 }
-  vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
-  -- vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
-  vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], opts)
-  vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], opts)
-  vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
-  vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
-  vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], opts)
-end
+-- floating terminal
+map("n", "<leader>fT", function()
+  Snacks.terminal()
+end, { desc = "Terminal (cwd)" })
+map("n", "<leader>ft", function()
+  Snacks.terminal(nil, { cwd = Util.getRoot() })
+end, { desc = "Terminal (Root Dir)" })
+map("n", "<c-/>", function()
+  Snacks.terminal(nil, { cwd = Util.getRoot() })
+end, { desc = "Terminal (Root Dir)" })
+map("n", "<c-_>", function()
+  Snacks.terminal(nil, { cwd = Util.getRoot() })
+end, { desc = "which_key_ignore" })
 
--- if you only want these mappings for toggle term use term://*toggleterm#* instead
-vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+-- Terminal Mappings
+map("t", "<C-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
+map("t", "<c-_>", "<cmd>close<cr>", { desc = "which_key_ignore" })
