@@ -1,3 +1,4 @@
+local auto_format = true
 return {
   {
     "mfussenegger/nvim-lint",
@@ -7,8 +8,8 @@ return {
       events = { "BufWritePost", "BufReadPost", "InsertLeave" },
       linters_by_ft = {
         fish = { "fish" },
-        typescript = { "eslint_d" },
-        javascript = { "eslint_d" },
+        typescript = { "eslint", "eslint_d" },
+        javascript = { "eslint", "eslint_d" },
         -- Use the "*" filetype to run linters on all filetypes.
         -- ['*'] = { 'global linter' },
         -- Use the "_" filetype to run linters on filetypes that don't have other linters configured.
@@ -97,5 +98,38 @@ return {
         callback = M.debounce(100, M.lint),
       })
     end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    -- other settings removed for brevity
+    opts = {
+      ---@type lspconfig.options
+      servers = {
+        eslint = {
+          settings = {
+            -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
+            workingDirectories = { mode = "auto" },
+            format = true,
+          },
+        },
+      },
+      setup = {
+        eslint = function()
+          if not auto_format then
+            return
+          end
+
+          local formatter = Util.lsp_formatter({
+            name = "eslint: lsp",
+            primary = false,
+            priority = 200,
+            filter = "eslint",
+          })
+
+          -- register the formatter with LazyVim
+          Util.format_register(formatter)
+        end,
+      },
+    },
   },
 }

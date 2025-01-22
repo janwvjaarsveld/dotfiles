@@ -102,6 +102,7 @@ M.treesitter = {
 M.mason = {
   ensure_installed = {
     "delve",
+    "eslint-lsp",
     "eslint_d",
     "gopls",
     "prettier",
