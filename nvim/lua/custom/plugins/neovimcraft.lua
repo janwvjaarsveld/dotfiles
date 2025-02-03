@@ -2,13 +2,14 @@ return {
   dir = "~/dev/plugins/neovimcraft.nvim",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    {
-      "ellisonleao/glow.nvim",
-      config = function()
-        require("glow").setup({ width = 300, height = 300 })
-      end,
-      cmd = "Glow",
-    },
+    "nvim-telescope/telescope.nvim",
+    -- {
+    --   "ellisonleao/glow.nvim",
+    --   config = function()
+    --     require("glow").setup({ width = 300, height = 300 })
+    --   end,
+    --   cmd = "Glow",
+    -- },
 
     -- {
     --   "MeanderingProgrammer/render-markdown.nvim",
@@ -29,6 +30,6 @@ return {
     -- },
   },
   -- config = function()
-  --   require("neocraft").setup()
+  --   require("neovimcraft").setup()
   -- end,
 }

@@ -99,5 +99,6 @@ map("n", "<c-_>", function()
 end, { desc = "which_key_ignore" })
 
 -- Terminal Mappings
+map("t", "<C-e>", "<C-\\><C-n>", { desc = "Exit Terminal Mode" })
 map("t", "<C-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
 map("t", "<c-_>", "<cmd>close<cr>", { desc = "which_key_ignore" })

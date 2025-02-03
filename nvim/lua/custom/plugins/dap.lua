@@ -235,6 +235,25 @@ return {
           },
         },
       }
+
+      require("dap").configurations.javascript = {
+        {
+          type = "node",
+          request = "launch",
+          name = "Launch file",
+          -- program = "${file}",
+          runtimeExecutable = "yarn",
+          runtimeArgs = { "yarn projen", "--inspect-brk" },
+          cwd = "${workspaceFolder}",
+        },
+        {
+          -- For this to work you need to make sure the node process is started with the `--inspect` flag.
+          name = "Attach to process",
+          type = "pwa-node",
+          request = "attach",
+          processId = require("dap.utils").pick_process,
+        },
+      }
     end,
   },
   {

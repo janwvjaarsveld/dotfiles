@@ -104,22 +104,22 @@ return {
             },
           },
         },
-        handlers = function()
-          -- setup any additional handlers here
-          -- these are called when the LSP server supports a method
-          -- and the buffer is attached to the LSP server
-          -- the handler is called with the client and buffer number
-          -- you can use this to setup any additional keymaps or settings
-          -- for the LSP server
-          -- this is called after the default on_attach
-
-          -- LSP settings (for overriding per client)
-          local handlers = {
-            ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = Global.border }),
-            ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = Global.border }),
-          }
-          return handlers
-        end,
+        -- handlers = function()
+        --   -- setup any additional handlers here
+        --   -- these are called when the LSP server supports a method
+        --   -- and the buffer is attached to the LSP server
+        --   -- the handler is called with the client and buffer number
+        --   -- you can use this to setup any additional keymaps or settings
+        --   -- for the LSP server
+        --   -- this is called after the default on_attach
+        --
+        --   -- LSP settings (for overriding per client)
+        --   local handlers = {
+        --     ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = Global.border }),
+        --     ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = Global.border }),
+        --   }
+        --   return handlers
+        -- end,
         -- options for vim.lsp.buf.format
         -- `bufnr` and `filter` is handled by the LazyVim formatter,
         -- but can be also overridden when specified
@@ -244,7 +244,7 @@ return {
       local function setup(server)
         local server_opts = vim.tbl_deep_extend("force", {
           capabilities = vim.deepcopy(capabilities),
-          handlers = opts.handlers() or {},
+          -- handlers = opts.handlers() or {},
         }, servers[server] or {})
         if server_opts.enabled == false then
           return
@@ -306,6 +306,13 @@ return {
           return false
         end)
       end
+
+      require("custom.lsp_hover").setup({
+        ["ts_ls"] = {
+          name = "󰛦 TypeScript",
+          border_hl = "MiniIconsAzure",
+        },
+      })
     end,
   },
   {

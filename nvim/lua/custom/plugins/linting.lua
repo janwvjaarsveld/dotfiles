@@ -1,4 +1,3 @@
-local auto_format = true
 return {
   {
     "mfussenegger/nvim-lint",
@@ -8,8 +7,8 @@ return {
       events = { "BufWritePost", "BufReadPost", "InsertLeave" },
       linters_by_ft = {
         fish = { "fish" },
-        typescript = { "eslint", "eslint_d" },
-        javascript = { "eslint", "eslint_d" },
+        typescript = { "eslint_d" },
+        javascript = { "eslint_d" },
         -- Use the "*" filetype to run linters on all filetypes.
         -- ['*'] = { 'global linter' },
         -- Use the "_" filetype to run linters on filetypes that don't have other linters configured.
@@ -58,6 +57,18 @@ return {
         end
       end
 
+      function M.find_nearest_node_modules_dir()
+        -- current buffer dir
+        local current_dir = vim.fn.expand("%:p:h")
+        while current_dir ~= "/" do
+          if vim.fn.isdirectory(current_dir .. "/node_modules") == 1 then
+            return current_dir
+          end
+          current_dir = vim.fn.fnamemodify(current_dir, ":h")
+        end
+        return nil
+      end
+
       function M.lint()
         -- Use nvim-lint's logic first:
         -- * checks if linters exist for the full filetype first
@@ -87,10 +98,27 @@ return {
           return linter and not (type(linter) == "table" and linter.condition and not linter.condition(ctx))
         end, names)
 
+        local ft = vim.bo.filetype
+        local js_types = { "javascript", "typescript", "javascriptreact", "typescriptreact" }
+        if not vim.tbl_contains(js_types, ft) then
+          -- Run linters.
+          if #names > 0 then
+            lint.try_lint(names)
+          end
+          return
+        end
+
+        -- This is a JS/TS file, so we need to run the linters in the node_modules directory.
+        local original_cwd = vim.fn.getcwd()
+        local node_modules_dir = M.find_nearest_node_modules_dir()
+        if node_modules_dir then
+          vim.cmd("cd " .. node_modules_dir)
+        end
         -- Run linters.
         if #names > 0 then
           lint.try_lint(names)
         end
+        vim.cmd("cd " .. original_cwd)
       end
 
       vim.api.nvim_create_autocmd(opts.events, {
@@ -98,38 +126,5 @@ return {
         callback = M.debounce(100, M.lint),
       })
     end,
-  },
-  {
-    "neovim/nvim-lspconfig",
-    -- other settings removed for brevity
-    opts = {
-      ---@type lspconfig.options
-      servers = {
-        eslint = {
-          settings = {
-            -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
-            workingDirectories = { mode = "auto" },
-            format = true,
-          },
-        },
-      },
-      setup = {
-        eslint = function()
-          if not auto_format then
-            return
-          end
-
-          local formatter = Util.lsp_formatter({
-            name = "eslint: lsp",
-            primary = false,
-            priority = 200,
-            filter = "eslint",
-          })
-
-          -- register the formatter with LazyVim
-          Util.format_register(formatter)
-        end,
-      },
-    },
   },
 }

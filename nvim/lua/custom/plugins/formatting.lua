@@ -22,13 +22,13 @@ return {
       go = { "gopls", "goimports", "gofumpt", lsp_format = "fallback" },
       lua = { "stylua" },
       python = { "ruff", "black", stop_after_first = true },
-      markdown = { "prettier", "markdownlint", stop_after_first = true },
+      -- markdown = { "prettier", "markdownlint", stop_after_first = true },
       javascript = { "prettier", lsp_format = "fallback", stop_after_first = true },
       typescript = { "prettier", lsp_format = "fallback", stop_after_first = true },
       _ = { "prettierd" },
     },
     -- Set up format-on-save
-    format_on_save = { timeout_ms = 1500 },
+    format_on_save = { timeout_ms = 3500 },
 
     -- Conform will notify you when no formatters are available for the buffer
     notify_no_formatters = true,
