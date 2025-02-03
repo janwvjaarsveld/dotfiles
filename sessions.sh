@@ -20,7 +20,7 @@ fi
 
 # Tmux window names cannot have dots in them, because that indicates a pane
 name="${foldername/./_}"
-# echo "$name"
+echo "$name"
 
 function new_session() {
   tmux new-session -s $session_name -n $name -d
@@ -55,7 +55,7 @@ elif [ $(tmux ls | grep -w $session_name | wc -l) -eq 0 ]; then
   fi
 else
   echo "Session exists, creating window..."
-  tmux new-window -n $name -t $session_name -d
+  tmux new-window -a -n $name -t $session_name -d
   cd_and_nvim
   if [ "$should_attach" = true ]; then
     attach_session
