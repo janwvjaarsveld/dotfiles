@@ -34,7 +34,7 @@ setup_homebrew() {
 install_dependencies() {
 	echo "Installing dependencies"
 	# brew install --cask iterm2
-	brew install neovim python3 nvm yarn ripgrep pyenv the_silver_searcher fd lazydocker lazygit git wget curl unzip fontconfig go fzf
+	brew install neovim python3 nvm yarn ripgrep pyenv the_silver_searcher fd lazydocker lazygit git wget curl unzip fontconfig go fzf tmux
 }
 
 setup_fonts() {
@@ -82,11 +82,9 @@ setup_nvim() {
 
 setup_tmux() {
 	echo "Setting up tmux..."
-	brew install tmux
-	for FILE in $(ls -A ${DOTFILES_DIR}/tmux); do
-		echo "Symlinking $HOME/dotfiles/tmux/$FILE to ~/$FILE"
-		ln -sf $DOTFILES_DIR/tmux/"$FILE" $HOME/"$FILE"
-	done
+  echo "Symlinking $HOME/dotfiles/tmux to ~/.config/"
+  ln -sf $DOTFILES_DIR/tmux $HOME/.config/
+  ln -sf $DOTFILES_DIR/tmux/.tmux.conf $HOME/.config/tmux/
 }
 
 setup_tmuxinator() {

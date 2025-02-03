@@ -86,7 +86,7 @@ alias fixlogi="sudo pkill -9 logiopt"
 alias serve="python3 -m http.server"
 alias pnl="cd ~/postnl"
 alias dev="cd ~/dev"
-alias tsession='~/dotfiles/tmux/sessions.sh'
+alias tsession='~/dotfiles/sessions.sh'
 alias tpos='tsession ~/postnl "postnl"'
 alias tdev='tsession ~/dev "dev"'
 alias tdot='tsession ~ "dev" true "dotfiles"'
@@ -126,6 +126,8 @@ COMPLETION_WAITING_DOTS="true"
   # eval "$(${HOMEBREW_PREFIX}/bin/brew shellenv)"
 # fi
 
+# Tmux session wizard
+export PATH=$HOME/.tmux/plugins/tmux-session-wizard/bin:$PATH
 
 # npm global
 export PATH=~/.npm-global/bin:$PATH
