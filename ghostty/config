@@ -1,5 +1,6 @@
 font-family="MesloLGL Nerd Font"
 font-size=16
+theme=Dracula
 
 ## jump to end of line:
 keybind = all:super+right=text:\x05
