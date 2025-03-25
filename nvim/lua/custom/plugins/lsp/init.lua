@@ -327,4 +327,5 @@ return {
   { import = "custom.plugins.lsp.lang.sql" },
   { import = "custom.plugins.lsp.lang.typescript" },
   { import = "custom.plugins.lsp.lang.yaml" },
+  { import = "custom.plugins.lsp.lang.rust" },
 }

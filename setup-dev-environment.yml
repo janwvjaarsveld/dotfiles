@@ -1,0 +1,215 @@
+---
+# Ansible Playbook for Dev Environment Setup
+# Filename: setup-dev-environment.yml
+
+- name: Setup Development Environment
+  hosts: all
+  vars:
+    dotfiles_dir: "{{ ansible_env.HOME }}/dotfiles"
+    homebrew_prefix: "{{ '/opt/homebrew' if ansible_machine == 'arm64' else '/usr/local' }}"
+    homebrew_repository: "{{ '/opt/homebrew' if ansible_machine == 'arm64' else '/usr/local/Homebrew' }}"
+    zsh_custom_dir: "{{ ansible_env.HOME }}/.oh-my-zsh/custom"
+    brew_packages:
+      - neovim
+      - python3
+      - nvm
+      - yarn
+      - ripgrep
+      - pyenv
+      - the_silver_searcher
+      - fd
+      - lazydocker
+      - lazygit
+      - git
+      - wget
+      - curl
+      - unzip
+      - fontconfig
+      - go
+      - fzf
+      - tmux
+      - zsh
+      - tmuxinator
+    brew_cask_packages:
+      - wezterm
+      - kitty
+    brew_fonts:
+      - font-meslo-for-powerline
+      - font-meslo-lg-nerd-font
+
+  tasks:
+    - name: Check if dotfiles directory exists
+      stat:
+        path: "{{ dotfiles_dir }}"
+      register: dotfiles_stat
+
+    - name: Fail if dotfiles directory doesn't exist
+      fail:
+        msg: "Directory {{ dotfiles_dir }} DOES NOT exist."
+      when: not dotfiles_stat.stat.exists
+
+    - name: Create .config directory
+      file:
+        path: "{{ ansible_env.HOME }}/.config"
+        state: directory
+        mode: "0755"
+
+    # Homebrew setup
+    - name: Install Homebrew
+      shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      args:
+        creates: "{{ homebrew_prefix }}/bin/brew"
+      register: homebrew_installed
+      when: ansible_os_family == "Darwin"
+      tags:
+        - homebrew
+
+    - name: Add Homebrew to zprofile
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/.zprofile"
+        line: 'eval "$({{ homebrew_repository }}/bin/brew shellenv)"'
+        create: yes
+      when: homebrew_installed is changed
+      tags:
+        - homebrew
+
+    # Install dependencies
+    - name: Install Homebrew packages
+      homebrew:
+        name: "{{ brew_packages }}"
+        state: present
+      tags:
+        - dependencies
+
+    - name: Install Homebrew cask packages
+      homebrew_cask:
+        name: "{{ brew_cask_packages }}"
+        state: present
+      tags:
+        - dependencies
+
+    # Fonts setup
+    - name: Tap fonts cask
+      homebrew_tap:
+        name: homebrew/cask-fonts
+      tags:
+        - fonts
+
+    - name: Install fonts
+      homebrew_cask:
+        name: "{{ brew_fonts }}"
+        state: present
+      tags:
+        - fonts
+
+    - name: Update font cache
+      command: fc-cache -fv
+      changed_when: false
+      tags:
+        - fonts
+
+    # ZSH setup
+    - name: Install Oh My Zsh
+      shell: curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash
+      args:
+        creates: "{{ ansible_env.HOME }}/.oh-my-zsh"
+      tags:
+        - zsh
+
+    - name: Symlink zsh config files
+      shell: |
+        for FILE in $(ls -A {{ dotfiles_dir }}/zsh); do
+          ln -sf {{ dotfiles_dir }}/zsh/"$FILE" {{ ansible_env.HOME }}/"$FILE"
+        done
+      tags:
+        - zsh
+
+    - name: Clone powerlevel10k theme
+      git:
+        repo: https://github.com/romkatv/powerlevel10k.git
+        dest: "{{ zsh_custom_dir }}/themes/powerlevel10k"
+        depth: 1
+      tags:
+        - zsh
+
+    - name: Clone zsh-autosuggestions plugin
+      git:
+        repo: https://github.com/zsh-users/zsh-autosuggestions
+        dest: "{{ zsh_custom_dir }}/plugins/zsh-autosuggestions"
+      tags:
+        - zsh
+
+    - name: Clone zsh-syntax-highlighting plugin
+      git:
+        repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+        dest: "{{ zsh_custom_dir }}/plugins/zsh-syntax-highlighting"
+      tags:
+        - zsh
+
+    - name: Set ZSH as default shell
+      shell: chsh -s $(which zsh)
+      changed_when: false
+      tags:
+        - zsh
+
+    # Kitty setup
+    - name: Symlink kitty config
+      file:
+        src: "{{ dotfiles_dir }}/kitty"
+        dest: "{{ ansible_env.HOME }}/.config/kitty"
+        state: link
+      tags:
+        - kitty
+
+    # Wezterm setup
+    - name: Symlink wezterm config
+      file:
+        src: "{{ dotfiles_dir }}/wezterm/.wezterm.lua"
+        dest: "{{ ansible_env.HOME }}/.wezterm.lua"
+        state: link
+      tags:
+        - wezterm
+
+    # Neovim setup
+    - name: Symlink nvim config
+      file:
+        src: "{{ dotfiles_dir }}/nvim"
+        dest: "{{ ansible_env.HOME }}/.config/nvim"
+        state: link
+      tags:
+        - nvim
+
+    # Tmux setup
+    - name: Symlink tmux config directory
+      file:
+        src: "{{ dotfiles_dir }}/tmux"
+        dest: "{{ ansible_env.HOME }}/.config/tmux"
+        state: link
+      tags:
+        - tmux
+
+    - name: Symlink tmux.conf
+      file:
+        src: "{{ dotfiles_dir }}/tmux/.tmux.conf"
+        dest: "{{ ansible_env.HOME }}/.config/tmux/.tmux.conf"
+        state: link
+      tags:
+        - tmux
+
+    # Tmuxinator setup
+    - name: Symlink tmuxinator config
+      file:
+        src: "{{ dotfiles_dir }}/tmuxinator"
+        dest: "{{ ansible_env.HOME }}/.config/tmuxinator"
+        state: link
+      tags:
+        - tmuxinator
+
+    # Set execute permissions on scripts
+    - name: Set execute permissions on scripts
+      file:
+        path: "{{ dotfiles_dir }}/scripts/"
+        mode: "u+x"
+        recurse: yes
+      tags:
+        - scripts

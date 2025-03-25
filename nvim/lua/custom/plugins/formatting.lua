@@ -24,7 +24,8 @@ return {
       python = { "ruff", "black", stop_after_first = true },
       -- markdown = { "prettier", "markdownlint", stop_after_first = true },
       javascript = { "prettier", lsp_format = "fallback", stop_after_first = true },
-      typescript = { "prettier", lsp_format = "fallback", stop_after_first = true },
+      typescript = { "prettier", "eslint", lsp_format = "fallback" },
+      rust = { "rustfmt", "cargo fmt", lsp_format = "fallback" },
       _ = { "prettierd" },
     },
     -- Set up format-on-save

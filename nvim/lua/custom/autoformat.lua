@@ -7,6 +7,7 @@ local setup = function()
       lua = { "stylua" },
       javescript = { "prettier", "prettierd", "fallback" },
       typescript = { "prettier", "prettierd", "fallback" },
+      rust = { "rustfmt" },
       yaml = { "prettier", "prettierd", "fallback" },
     },
   })

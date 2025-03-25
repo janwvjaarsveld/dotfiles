@@ -52,7 +52,7 @@ return {
         [ruff] = function()
           Util.lsp_on_attach(function(client, _)
             -- Disable hover in favor of Pyright
-            client.server_capabilities.hoverProvider = false
+            client.server_capabilities.hoverProvider = true
           end, ruff)
         end,
       },
@@ -95,11 +95,7 @@ return {
         { "<leader>dPc", function() require('dap-python').test_class() end, desc = "Debug Class", ft = "python" },
       },
       config = function()
-        if vim.fn.has("win32") == 1 then
-          require("dap-python").setup(Util.get_pkg_path("debugpy", "/venv/Scripts/pythonw.exe"))
-        else
-          require("dap-python").setup(Util.get_pkg_path("debugpy", "/venv/bin/python"))
-        end
+        require("dap-python").setup(Util.get_pkg_path("debugpy", "/venv/bin/python"))
       end,
     },
   },

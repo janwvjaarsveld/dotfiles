@@ -1,0 +1,74 @@
+---
+# Main playbook with interactive selections
+# Filename: main.yml
+
+- hosts: all
+  gather_facts: yes
+  vars_prompt:
+    - name: install_homebrew
+      prompt: "Do you want to install Homebrew? (yes/no)"
+      private: no
+      default: "yes"
+
+    - name: install_dependencies
+      prompt: "Do you want to install dependencies? (yes/no)"
+      private: no
+      default: "yes"
+
+    - name: install_fonts
+      prompt: "Do you want to install fonts? (yes/no)"
+      private: no
+      default: "yes"
+
+    - name: install_nvim
+      prompt: "Do you want to install Neovim configuration? (yes/no)"
+      private: no
+      default: "yes"
+
+    - name: install_zsh
+      prompt: "Do you want to install ZSH configuration? (yes/no)"
+      private: no
+      default: "yes"
+
+    - name: install_wezterm
+      prompt: "Do you want to install Wezterm? (yes/no)"
+      private: no
+      default: "yes"
+
+    - name: install_kitty
+      prompt: "Do you want to install Kitty? (yes/no)"
+      private: no
+      default: "yes"
+
+    - name: install_tmux
+      prompt: "Do you want to install Tmux configuration? (yes/no)"
+      private: no
+      default: "yes"
+
+    - name: install_tmuxinator
+      prompt: "Do you want to install Tmuxinator? (yes/no)"
+      private: no
+      default: "yes"
+
+  tasks:
+    - name: Include setup playbook
+      include_tasks: setup-dev-environment.yml
+      tags:
+        - always
+      vars:
+        selected_tags: "{{ selected_components }}"
+
+  pre_tasks:
+    - name: Set selected components based on user input
+      set_fact:
+        selected_components: "{{ []
+          + (['homebrew'] if install_homebrew == 'yes' else []) 
+          + (['dependencies'] if install_dependencies == 'yes' else [])
+          + (['fonts'] if install_fonts == 'yes' else [])
+          + (['nvim'] if install_nvim == 'yes' else [])
+          + (['zsh'] if install_zsh == 'yes' else [])
+          + (['wezterm'] if install_wezterm == 'yes' else [])
+          + (['kitty'] if install_kitty == 'yes' else [])
+          + (['tmux'] if install_tmux == 'yes' else [])
+          + (['tmuxinator'] if install_tmuxinator == 'yes' else [])
+        }}"
