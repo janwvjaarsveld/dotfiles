@@ -124,6 +124,8 @@ COMPLETION_WAITING_DOTS="true"
   # eval "$(${HOMEBREW_PREFIX}/bin/brew shellenv)"
 # fi
 
+# Tmux session wizard
+export PATH=$HOME/.tmux/plugins/tmux-session-wizard/bin:$PATH
 
 # npm global
 export PATH=~/.npm-global/bin:$PATH
@@ -144,6 +146,9 @@ export ANTHROPIC_API_KEY=$(<~/.api-keys/anthropic.txt)
 export OPENAI_API_KEY=$(<~/.api-keys/openai.txt)
 # asdf sourcing
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+# Needed for images to work in Nvim
+export SNACKS_GHOSTTY=true
 
 # this is needed for kitty to enable jumping to words with option + arrow keys
 export WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
