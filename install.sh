@@ -375,20 +375,28 @@ navigate() {
 
   if [ "$direction" = "up" ]; then
     # Move up and skip non-interactive items
-    while [ $CURSOR_POS -gt 0 ]; do
-      CURSOR_POS=$((CURSOR_POS - 1))
-      local item=$(get_menu_item $CURSOR_POS)
-      if is_interactive "$item"; then
-        break
+    while true; do
+      if [ $CURSOR_POS -gt 0 ]; then
+        CURSOR_POS=$((CURSOR_POS - 1))
+        local item=$(get_menu_item $CURSOR_POS)
+        if is_interactive "$item"; then
+          break
+        fi
+      else
+        CURSOR_POS=$((MENU_COUNT - 1))
       fi
     done
   elif [ "$direction" = "down" ]; then
     # Move down and skip non-interactive items
-    while [ $CURSOR_POS -lt $((MENU_COUNT - 1)) ]; do
-      CURSOR_POS=$((CURSOR_POS + 1))
-      local item=$(get_menu_item $CURSOR_POS)
-      if is_interactive "$item"; then
-        break
+    while true; do
+      if [ $CURSOR_POS -lt $((MENU_COUNT - 1)) ]; then
+        CURSOR_POS=$((CURSOR_POS + 1))
+        local item=$(get_menu_item $CURSOR_POS)
+        if is_interactive "$item"; then
+          break
+        fi
+      else
+        CURSOR_POS=0
       fi
     done
   fi
@@ -722,9 +730,9 @@ main() {
     exit 1
   fi
 
-  echo "Starting Development Environment Installer..."
-  echo "Press any key to continue..."
-  read -rsn1
+  # echo "Starting Development Environment Installer..."
+  # echo "Press any key to continue..."
+  # read -rsn1
 
   check_dotfiles
   main_loop
