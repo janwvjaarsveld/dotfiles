@@ -619,7 +619,6 @@ install_dependencies() {
 
 setup_fonts() {
   echo "Setting up fonts..."
-  brew tap homebrew/cask-fonts
   brew install font-meslo-for-powerline font-meslo-lg-nerd-font
   fc-cache -fv
 }
